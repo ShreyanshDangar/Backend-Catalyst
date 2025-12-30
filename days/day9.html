@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 9: Learn authentication basics - User registration, password hashing with bcrypt, and secure login systems.">
+<title>Day 9: Authentication Basics | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html" class="active">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html" class="active"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 9</span>
+<h2>Authentication Basics</h2>
+<p>Security is paramount. Today you learn to register users safely, hash passwords with bcrypt, and implement secure login systems that protect user credentials.</p>
+</div>
+<h3>Why Password Security Matters</h3>
+<p>Storing plain text passwords is catastrophic. When databases get breached (and they do), attackers gain immediate access to all user accounts. Password hashing makes stolen data useless.</p>
+<div class="important">
+<div class="important-label">Security Rule</div>
+<p>Never store plain text passwords. Never. Ever. Always hash passwords before storing them. This is non-negotiable in professional development.</p>
+</div>
+<h3>Understanding Bcrypt</h3>
+<p>Bcrypt is a password hashing algorithm designed to be slow and computationally expensive, making brute-force attacks impractical:</p>
+<div class="concept-box">
+<h4>How Bcrypt Works</h4>
+<ul>
+<li><strong>Salting</strong> - Adds random data to each password before hashing, preventing rainbow table attacks</li>
+<li><strong>Cost Factor</strong> - Controls how slow the hashing is (higher = more secure but slower)</li>
+<li><strong>One-Way</strong> - Cannot reverse a hash back to the original password</li>
+<li><strong>Built-in Salt</strong> - Salt is stored with the hash, no separate storage needed</li>
+</ul>
+</div>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Terminal</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code>npm install bcrypt</code></pre>
+</div>
+<h3>Hashing Passwords</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Basic Bcrypt Usage</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> bcrypt = <span class="function">require</span>(<span class="string">'bcrypt'</span>);
+
+<span class="comment">// Salt rounds (cost factor) - 10-12 is recommended</span>
+<span class="comment">// Higher = more secure but slower</span>
+<span class="keyword">const</span> SALT_ROUNDS = <span class="number">10</span>;
+
+<span class="comment">// Hash a password (async recommended)</span>
+<span class="keyword">async function</span> <span class="function">hashPassword</span>(plainPassword) {
+  <span class="comment">// bcrypt.hash generates salt and hashes in one step</span>
+  <span class="keyword">const</span> hashedPassword = <span class="keyword">await</span> bcrypt.<span class="function">hash</span>(plainPassword, SALT_ROUNDS);
+  <span class="keyword">return</span> hashedPassword;
+}
+
+<span class="comment">// Example output (will be different each time due to random salt):</span>
+<span class="comment">// $2b$10$N9qo8uLOickgx2ZMRZoMye.IjqR5rKP5VrVYJE4JkFd6HQG3N9O.i</span>
+<span class="comment">// ^   ^  ^                      ^</span>
+<span class="comment">// |   |  |                      |</span>
+<span class="comment">// |   |  22-char salt           31-char hash</span>
+<span class="comment">// |   cost factor (10)</span>
+<span class="comment">// bcrypt identifier</span>
+
+<span class="comment">// Verify a password against stored hash</span>
+<span class="keyword">async function</span> <span class="function">verifyPassword</span>(plainPassword, hashedPassword) {
+  <span class="comment">// bcrypt.compare extracts salt from hash automatically</span>
+  <span class="keyword">const</span> isMatch = <span class="keyword">await</span> bcrypt.<span class="function">compare</span>(plainPassword, hashedPassword);
+  <span class="keyword">return</span> isMatch;  <span class="comment">// true if password matches, false otherwise</span>
+}</code></pre>
+</div>
+<h3>User Model with Password Hashing</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">models/User.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+<span class="keyword">const</span> bcrypt = <span class="function">require</span>(<span class="string">'bcrypt'</span>);
+
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  <span class="comment">// Email as unique identifier for login</span>
+  email: {
+    type: String,
+    required: [<span class="keyword">true</span>, <span class="string">'Email is required'</span>],
+    unique: <span class="keyword">true</span>,
+    lowercase: <span class="keyword">true</span>,
+    trim: <span class="keyword">true</span>,
+    match: [<span class="string">/^\S+@\S+\.\S+$/</span>, <span class="string">'Invalid email format'</span>]
+  },
+  <span class="comment">// Password with minimum length requirement</span>
+  password: {
+    type: String,
+    required: [<span class="keyword">true</span>, <span class="string">'Password is required'</span>],
+    minlength: [<span class="number">8</span>, <span class="string">'Password must be at least 8 characters'</span>],
+    select: <span class="keyword">false</span>  <span class="comment">// Never include password in queries by default</span>
+  },
+  <span class="comment">// Display name</span>
+  name: {
+    type: String,
+    required: [<span class="keyword">true</span>, <span class="string">'Name is required'</span>],
+    trim: <span class="keyword">true</span>
+  },
+  <span class="comment">// Account creation timestamp</span>
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+<span class="comment">// Pre-save middleware to hash password before saving</span>
+userSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">async function</span>(next) {
+  <span class="comment">// Only hash if password was modified (or new)</span>
+  <span class="comment">// This prevents re-hashing on unrelated updates</span>
+  <span class="keyword">if</span> (!<span class="keyword">this</span>.<span class="function">isModified</span>(<span class="string">'password'</span>)) {
+    <span class="keyword">return</span> <span class="function">next</span>();
+  }
+
+  <span class="keyword">try</span> {
+    <span class="comment">// Hash password with cost factor 10</span>
+    <span class="keyword">this</span>.password = <span class="keyword">await</span> bcrypt.<span class="function">hash</span>(<span class="keyword">this</span>.password, <span class="number">10</span>);
+    <span class="function">next</span>();
+  } <span class="keyword">catch</span> (err) {
+    <span class="function">next</span>(err);
+  }
+});
+
+<span class="comment">// Instance method to compare passwords</span>
+userSchema.methods.comparePassword = <span class="keyword">async function</span>(candidatePassword) {
+  <span class="comment">// 'this.password' is the hashed password from database</span>
+  <span class="keyword">return</span> bcrypt.<span class="function">compare</span>(candidatePassword, <span class="keyword">this</span>.password);
+};
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);</code></pre>
+</div>
+<h3>Registration Endpoint</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">routes/auth.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.<span class="function">Router</span>();
+<span class="keyword">const</span> User = <span class="function">require</span>(<span class="string">'../models/User'</span>);
+
+<span class="comment">// POST /api/auth/register - Create new user account</span>
+router.<span class="function">post</span>(<span class="string">'/register'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="comment">// Extract registration data from request body</span>
+    <span class="keyword">const</span> { email, password, name } = req.body;
+
+    <span class="comment">// Check if user with this email already exists</span>
+    <span class="keyword">const</span> existingUser = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email });
+    <span class="keyword">if</span> (existingUser) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({
+        error: <span class="string">'Email already registered'</span>
+      });
+    }
+
+    <span class="comment">// Create new user - password is hashed automatically by pre-save middleware</span>
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">create</span>({
+      email,
+      password,  <span class="comment">// Plain password - will be hashed by middleware</span>
+      name
+    });
+
+    <span class="comment">// Return success without exposing password</span>
+    res.<span class="function">status</span>(<span class="number">201</span>).<span class="function">json</span>({
+      message: <span class="string">'User registered successfully'</span>,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name
+      }
+    });
+
+  } <span class="keyword">catch</span> (err) {
+    <span class="comment">// Handle validation errors</span>
+    <span class="keyword">if</span> (err.name === <span class="string">'ValidationError'</span>) {
+      <span class="keyword">const</span> messages = Object.<span class="function">values</span>(err.errors).<span class="function">map</span>(e => e.message);
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: messages.<span class="function">join</span>(<span class="string">', '</span>) });
+    }
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: <span class="string">'Registration failed'</span> });
+  }
+});
+
+module.exports = router;</code></pre>
+</div>
+<h3>Login Endpoint</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">routes/auth.js (continued)</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// POST /api/auth/login - Authenticate user</span>
+router.<span class="function">post</span>(<span class="string">'/login'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> { email, password } = req.body;
+
+    <span class="comment">// Validate input exists</span>
+    <span class="keyword">if</span> (!email || !password) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({
+        error: <span class="string">'Email and password are required'</span>
+      });
+    }
+
+    <span class="comment">// Find user by email, explicitly include password field</span>
+    <span class="comment">// (+password overrides select: false in schema)</span>
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email }).<span class="function">select</span>(<span class="string">'+password'</span>);
+
+    <span class="comment">// Check if user exists</span>
+    <span class="keyword">if</span> (!user) {
+      <span class="comment">// Use generic message to prevent email enumeration</span>
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({
+        error: <span class="string">'Invalid email or password'</span>
+      });
+    }
+
+    <span class="comment">// Compare provided password with stored hash</span>
+    <span class="keyword">const</span> isValidPassword = <span class="keyword">await</span> user.<span class="function">comparePassword</span>(password);
+
+    <span class="keyword">if</span> (!isValidPassword) {
+      <span class="comment">// Same generic message - don't reveal which field is wrong</span>
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({
+        error: <span class="string">'Invalid email or password'</span>
+      });
+    }
+
+    <span class="comment">// Login successful - return user info</span>
+    <span class="comment">// In Day 10, we'll add JWT token here</span>
+    res.<span class="function">json</span>({
+      message: <span class="string">'Login successful'</span>,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name
+      }
+    });
+
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: <span class="string">'Login failed'</span> });
+  }
+});</code></pre>
+</div>
+<div class="important">
+<div class="important-label">Security Best Practice</div>
+<p>Always return the same error message for invalid email AND invalid password. If you say "Email not found" vs "Wrong password", attackers can enumerate which emails exist in your system.</p>
+</div>
+<h3>Complete Authentication Server</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">server.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+<span class="keyword">const</span> bcrypt = <span class="function">require</span>(<span class="string">'bcrypt'</span>);
+
+<span class="keyword">const</span> app = <span class="function">express</span>();
+app.<span class="function">use</span>(express.<span class="function">json</span>());
+
+<span class="comment">// Connect to MongoDB</span>
+mongoose.<span class="function">connect</span>(<span class="string">'mongodb://localhost:27017/authapp'</span>)
+  .<span class="function">then</span>(() => console.<span class="function">log</span>(<span class="string">'MongoDB connected'</span>))
+  .<span class="function">catch</span>(err => console.<span class="function">error</span>(err));
+
+<span class="comment">// User Schema with password hashing</span>
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  email: { type: String, required: <span class="keyword">true</span>, unique: <span class="keyword">true</span>, lowercase: <span class="keyword">true</span> },
+  password: { type: String, required: <span class="keyword">true</span>, minlength: <span class="number">8</span>, select: <span class="keyword">false</span> },
+  name: { type: String, required: <span class="keyword">true</span> },
+  createdAt: { type: Date, default: Date.now }
+});
+
+<span class="comment">// Hash password before saving</span>
+userSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">async function</span>(next) {
+  <span class="keyword">if</span> (!<span class="keyword">this</span>.<span class="function">isModified</span>(<span class="string">'password'</span>)) <span class="keyword">return</span> <span class="function">next</span>();
+  <span class="keyword">this</span>.password = <span class="keyword">await</span> bcrypt.<span class="function">hash</span>(<span class="keyword">this</span>.password, <span class="number">10</span>);
+  <span class="function">next</span>();
+});
+
+<span class="comment">// Compare password method</span>
+userSchema.methods.comparePassword = <span class="keyword">function</span>(candidatePassword) {
+  <span class="keyword">return</span> bcrypt.<span class="function">compare</span>(candidatePassword, <span class="keyword">this</span>.password);
+};
+
+<span class="keyword">const</span> User = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);
+
+<span class="comment">// Register endpoint</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/register'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> { email, password, name } = req.body;
+
+    <span class="comment">// Check existing user</span>
+    <span class="keyword">const</span> exists = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email });
+    <span class="keyword">if</span> (exists) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: <span class="string">'Email already registered'</span> });
+    }
+
+    <span class="comment">// Create user</span>
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">create</span>({ email, password, name });
+
+    res.<span class="function">status</span>(<span class="number">201</span>).<span class="function">json</span>({
+      message: <span class="string">'Registration successful'</span>,
+      user: { id: user._id, email: user.email, name: user.name }
+    });
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// Login endpoint</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/login'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> { email, password } = req.body;
+
+    <span class="comment">// Find user with password included</span>
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email }).<span class="function">select</span>(<span class="string">'+password'</span>);
+
+    <span class="comment">// Verify user exists and password matches</span>
+    <span class="keyword">if</span> (!user || !(<span class="keyword">await</span> user.<span class="function">comparePassword</span>(password))) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Invalid credentials'</span> });
+    }
+
+    res.<span class="function">json</span>({
+      message: <span class="string">'Login successful'</span>,
+      user: { id: user._id, email: user.email, name: user.name }
+    });
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: <span class="string">'Login failed'</span> });
+  }
+});
+
+app.<span class="function">listen</span>(<span class="number">3000</span>, () => console.<span class="function">log</span>(<span class="string">'Server running on port 3000'</span>));</code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=Ud5xKCYQTjM" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">Node.js Authentication with Bcrypt</div>
+<div class="video-channel">Web Dev Simplified</div>
+</div>
+</a>
+<a href="https://www.youtube.com/watch?v=mbsmsi7l3r4" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">Password Hashing Explained</div>
+<div class="video-channel">Computerphile</div>
+</div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check</h4>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">1. Why should you use the same error message for invalid email and invalid password?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">It makes debugging easier</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">It improves user experience</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">It prevents attackers from discovering which emails exist</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">It reduces server load</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Using generic messages like "Invalid credentials" prevents email enumeration attacks where attackers try to discover valid email addresses in your system.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Generic error messages prevent email enumeration - if you say "email not found", attackers can build a list of valid emails by trying many addresses.</div>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">2. What does `select: false` do in a Mongoose schema field?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">Makes the field read-only</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">Excludes the field from query results by default</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">Prevents the field from being saved</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">Marks the field as optional</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> select: false excludes the field from query results unless explicitly requested with .select('+fieldName'). This is commonly used for sensitive data like passwords.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> select: false means the field won't be included in query results by default. You must explicitly request it with .select('+password') to include it.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. What does the salt in bcrypt protect against?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">Rainbow table attacks and identical password detection</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">SQL injection attacks</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">Cross-site scripting</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">Brute force attacks</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Salt ensures that even identical passwords produce different hashes, defeating precomputed rainbow tables and preventing attackers from identifying users with the same password.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Salt adds random data to each password before hashing. This defeats rainbow table attacks (precomputed hash databases) and ensures identical passwords don't produce identical hashes.</div>
+</div>
+</div>
+<div class="project-box">
+<span class="project-label">Practice Project</span>
+<h4>Build a Complete Auth System</h4>
+<p>Extend the authentication system with additional features:</p>
+<ul>
+<li>Add password confirmation field during registration (password must match confirmPassword)</li>
+<li>Implement password strength validation (must include uppercase, lowercase, number, special char)</li>
+<li>Add a "forgot password" endpoint that generates a reset token</li>
+<li>Create a profile endpoint that returns user data (excluding password)</li>
+<li>Implement rate limiting on login attempts (max 5 per minute)</li>
+</ul>
+</div>
+</section>
+<nav class="page-nav">
+<a href="day8.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 8: Data Modeling</a>
+<a href="day10.html">Day 10: JWT<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</nav>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
