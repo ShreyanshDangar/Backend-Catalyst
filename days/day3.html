@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 3: Master HTTP methods GET, POST, PUT, DELETE and learn JSON - the data format of the modern web.">
+<title>Day 3: HTTP Methods and JSON | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html" class="active">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html" class="active"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 3</span>
+<h2>HTTP Methods and JSON</h2>
+<p>Yesterday you built a server that responds to requests. Today you learn the different types of requests (HTTP methods) and JSON - the universal data format that APIs use to communicate.</p>
+</div>
+<h3>HTTP Methods - The Verbs of the Web</h3>
+<p>HTTP methods tell the server what you want to do. Think of them as verbs - actions you want to perform on a resource.</p>
+<div class="concept-box">
+<h4>The Main HTTP Methods</h4>
+<ul>
+<li><strong>GET</strong> - Retrieve data (Read)</li>
+<li><strong>POST</strong> - Create new data (Create)</li>
+<li><strong>PUT</strong> - Update existing data completely (Replace)</li>
+<li><strong>PATCH</strong> - Update existing data partially (Modify)</li>
+<li><strong>DELETE</strong> - Remove data (Delete)</li>
+</ul>
+</div>
+<div class="analogy">
+<div class="analogy-label">Real World Analogy</div>
+<p>Think of a library. GET is reading a book. POST is donating a new book. PUT is replacing a book with a new edition. PATCH is fixing a typo in a book. DELETE is removing a book from the collection.</p>
+</div>
+<h3>GET Requests</h3>
+<p><strong>GET</strong> retrieves data without modifying anything. It is the most common request - every time you visit a URL, your browser makes a GET request.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">GET Request Examples</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Get all users</span>
+GET /api/users
+
+<span class="comment"># Get a specific user by ID</span>
+GET /api/users/123
+
+<span class="comment"># Get users with query parameters (filtering)</span>
+GET /api/users?role=admin&active=true
+
+<span class="comment"># Get users with pagination</span>
+GET /api/users?page=2&limit=10</code></pre>
+</div>
+<div class="important">
+<div class="important-label">Key Point</div>
+<p>GET requests should NEVER modify data. They should be <strong>idempotent</strong> - calling them multiple times produces the same result. GET requests also should not have a request body.</p>
+</div>
+<h3>POST Requests</h3>
+<p><strong>POST</strong> creates new resources. It sends data in the request body and typically returns the created resource.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">POST Request Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Create a new user</span>
+POST /api/users
+Content-Type: application/json
+
+{
+    <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+    <span class="string">"email"</span>: <span class="string">"john@example.com"</span>,
+    <span class="string">"password"</span>: <span class="string">"secret123"</span>
+}
+
+<span class="comment"># Response: 201 Created</span>
+{
+    <span class="string">"id"</span>: <span class="number">456</span>,
+    <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+    <span class="string">"email"</span>: <span class="string">"john@example.com"</span>,
+    <span class="string">"createdAt"</span>: <span class="string">"2024-01-15T10:30:00Z"</span>
+}</code></pre>
+</div>
+<h3>PUT Requests</h3>
+<p><strong>PUT</strong> replaces an entire resource. You send the complete new version.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">PUT Request Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Replace user 456 completely</span>
+PUT /api/users/456
+Content-Type: application/json
+
+{
+    <span class="string">"name"</span>: <span class="string">"John Smith"</span>,
+    <span class="string">"email"</span>: <span class="string">"johnsmith@example.com"</span>,
+    <span class="string">"role"</span>: <span class="string">"admin"</span>
+}
+
+<span class="comment"># Response: 200 OK with updated resource</span></code></pre>
+</div>
+<h3>PATCH Requests</h3>
+<p><strong>PATCH</strong> updates only specific fields, leaving others unchanged.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">PATCH Request Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Update ONLY the email of user 456</span>
+PATCH /api/users/456
+Content-Type: application/json
+
+{
+    <span class="string">"email"</span>: <span class="string">"newemail@example.com"</span>
+}
+
+<span class="comment"># Other fields (name, role) remain unchanged</span></code></pre>
+</div>
+<h3>DELETE Requests</h3>
+<p><strong>DELETE</strong> removes a resource. It usually returns 204 No Content on success.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">DELETE Request Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Delete user 456</span>
+DELETE /api/users/456
+
+<span class="comment"># Response: 204 No Content (success, no body)</span>
+<span class="comment"># Or: 200 OK with { "message": "User deleted" }</span></code></pre>
+</div>
+<h3>What is JSON?</h3>
+<p><strong>JSON (JavaScript Object Notation)</strong> is a text format for storing and transmitting data. It is the standard format for APIs because it is:</p>
+<ul>
+<li>Human-readable and writable</li>
+<li>Easy for machines to parse and generate</li>
+<li>Language-independent (works everywhere)</li>
+<li>Lightweight compared to XML</li>
+</ul>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">JSON Syntax</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code>{
+    <span class="string">"string"</span>: <span class="string">"Hello World"</span>,          <span class="comment">// Text in double quotes</span>
+    <span class="string">"number"</span>: <span class="number">42</span>,                      <span class="comment">// Integer or decimal</span>
+    <span class="string">"decimal"</span>: <span class="number">3.14159</span>,                <span class="comment">// Floating point</span>
+    <span class="string">"boolean"</span>: <span class="keyword">true</span>,                   <span class="comment">// true or false (lowercase!)</span>
+    <span class="string">"nullValue"</span>: <span class="keyword">null</span>,                 <span class="comment">// null (lowercase!)</span>
+    <span class="string">"array"</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="string">"mixed"</span>, <span class="keyword">true</span>], <span class="comment">// Ordered list</span>
+    <span class="string">"object"</span>: {                        <span class="comment">// Nested object</span>
+        <span class="string">"nested"</span>: <span class="string">"value"</span>,
+        <span class="string">"deep"</span>: {
+            <span class="string">"level"</span>: <span class="number">3</span>
+        }
+    }
+}</code></pre>
+</div>
+<div class="important">
+<div class="important-label">JSON Rules</div>
+<p>Keys must be strings in double quotes. No trailing commas. No comments (unlike JavaScript). Strings must use double quotes, not single. Boolean and null are lowercase.</p>
+</div>
+<h3>JSON in Node.js</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Working with JSON</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// JavaScript object</span>
+<span class="keyword">const</span> user = {
+    name: <span class="string">'John'</span>,
+    age: <span class="number">30</span>,
+    hobbies: [<span class="string">'coding'</span>, <span class="string">'gaming'</span>]
+};
+
+<span class="comment">// Convert JavaScript object to JSON string</span>
+<span class="keyword">const</span> jsonString = JSON.stringify(user);
+console.log(jsonString);
+<span class="comment">// Output: {"name":"John","age":30,"hobbies":["coding","gaming"]}</span>
+
+<span class="comment">// Pretty print with indentation</span>
+<span class="keyword">const</span> prettyJson = JSON.stringify(user, <span class="keyword">null</span>, <span class="number">2</span>);
+console.log(prettyJson);
+<span class="comment">// Output:</span>
+<span class="comment">// {</span>
+<span class="comment">//   "name": "John",</span>
+<span class="comment">//   "age": 30,</span>
+<span class="comment">//   "hobbies": ["coding", "gaming"]</span>
+<span class="comment">// }</span>
+
+<span class="comment">// Convert JSON string back to JavaScript object</span>
+<span class="keyword">const</span> parsed = JSON.parse(jsonString);
+console.log(parsed.name);  <span class="comment">// John</span>
+console.log(parsed.hobbies[<span class="number">0</span>]);  <span class="comment">// coding</span></code></pre>
+</div>
+<h3>Handling POST Requests with JSON</h3>
+<p>In raw Node.js, request bodies come in chunks that you need to collect. Here is how:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">server.js - Handling POST with JSON Body</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+
+<span class="comment">// Simple in-memory database</span>
+<span class="keyword">let</span> users = [
+    { id: <span class="number">1</span>, name: <span class="string">'Alice'</span>, email: <span class="string">'alice@example.com'</span> },
+    { id: <span class="number">2</span>, name: <span class="string">'Bob'</span>, email: <span class="string">'bob@example.com'</span> }
+];
+<span class="keyword">let</span> nextId = <span class="number">3</span>;
+
+<span class="keyword">const</span> server = http.createServer((req, res) => {
+    <span class="keyword">const</span> { method, url } = req;
+
+    <span class="comment">// Set JSON response headers</span>
+    res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);
+
+    <span class="comment">// GET /api/users - Return all users</span>
+    <span class="keyword">if</span> (method === <span class="string">'GET'</span> && url === <span class="string">'/api/users'</span>) {
+        res.statusCode = <span class="number">200</span>;
+        res.end(JSON.stringify(users));
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// POST /api/users - Create a new user</span>
+    <span class="keyword">if</span> (method === <span class="string">'POST'</span> && url === <span class="string">'/api/users'</span>) {
+        <span class="keyword">let</span> body = <span class="string">''</span>;
+
+        <span class="comment">// Collect data chunks as they arrive</span>
+        req.on(<span class="string">'data'</span>, (chunk) => {
+            body += chunk.toString();
+        });
+
+        <span class="comment">// All data received</span>
+        req.on(<span class="string">'end'</span>, () => {
+            <span class="keyword">try</span> {
+                <span class="comment">// Parse JSON body</span>
+                <span class="keyword">const</span> data = JSON.parse(body);
+
+                <span class="comment">// Validate required fields</span>
+                <span class="keyword">if</span> (!data.name || !data.email) {
+                    res.statusCode = <span class="number">400</span>;
+                    res.end(JSON.stringify({
+                        error: <span class="string">'Name and email are required'</span>
+                    }));
+                    <span class="keyword">return</span>;
+                }
+
+                <span class="comment">// Create new user</span>
+                <span class="keyword">const</span> newUser = {
+                    id: nextId++,
+                    name: data.name,
+                    email: data.email
+                };
+
+                <span class="comment">// Add to our "database"</span>
+                users.push(newUser);
+
+                <span class="comment">// Return created user with 201 status</span>
+                res.statusCode = <span class="number">201</span>;
+                res.end(JSON.stringify(newUser));
+            } <span class="keyword">catch</span> (error) {
+                <span class="comment">// Invalid JSON</span>
+                res.statusCode = <span class="number">400</span>;
+                res.end(JSON.stringify({
+                    error: <span class="string">'Invalid JSON'</span>
+                }));
+            }
+        });
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// 404 for unmatched routes</span>
+    res.statusCode = <span class="number">404</span>;
+    res.end(JSON.stringify({ error: <span class="string">'Not Found'</span> }));
+});
+
+server.listen(<span class="number">3000</span>, () => {
+    console.log(<span class="string">'Server running on http://localhost:3000'</span>);
+});</code></pre>
+</div>
+<h3>Testing Your API</h3>
+<p>Use these tools to test your API endpoints:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Testing with cURL (Terminal)</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># GET all users</span>
+curl http://localhost:3000/api/users
+
+<span class="comment"># POST - Create new user</span>
+curl -X POST http://localhost:3000/api/users \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d <span class="string">'{"name": "Charlie", "email": "charlie@test.com"}'</span>
+
+<span class="comment"># Pretty print JSON output</span>
+curl http://localhost:3000/api/users | json_pp</code></pre>
+</div>
+<div class="concept-box">
+<h4>API Testing Tools</h4>
+<ul>
+<li><strong>Postman</strong> - Popular GUI tool for API testing</li>
+<li><strong>Insomnia</strong> - Clean, fast alternative to Postman</li>
+<li><strong>Thunder Client</strong> - VS Code extension</li>
+<li><strong>cURL</strong> - Command line tool (built into Mac/Linux)</li>
+<li><strong>HTTPie</strong> - User-friendly command line tool</li>
+</ul>
+</div>
+<h3>Complete CRUD Server</h3>
+<p>Here is a complete server with all HTTP methods:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">server.js - Full CRUD API</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+
+<span class="keyword">let</span> todos = [
+    { id: <span class="number">1</span>, task: <span class="string">'Learn Node.js'</span>, done: <span class="keyword">false</span> },
+    { id: <span class="number">2</span>, task: <span class="string">'Build an API'</span>, done: <span class="keyword">false</span> }
+];
+<span class="keyword">let</span> nextId = <span class="number">3</span>;
+
+<span class="comment">// Helper to parse JSON body</span>
+<span class="keyword">function</span> getBody(req) {
+    <span class="keyword">return new</span> Promise((resolve, reject) => {
+        <span class="keyword">let</span> body = <span class="string">''</span>;
+        req.on(<span class="string">'data'</span>, chunk => body += chunk);
+        req.on(<span class="string">'end'</span>, () => {
+            <span class="keyword">try</span> {
+                resolve(body ? JSON.parse(body) : {});
+            } <span class="keyword">catch</span> (e) {
+                reject(e);
+            }
+        });
+    });
+}
+
+<span class="comment">// Helper to send JSON response</span>
+<span class="keyword">function</span> sendJson(res, status, data) {
+    res.statusCode = status;
+    res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);
+    res.end(JSON.stringify(data));
+}
+
+<span class="keyword">const</span> server = http.createServer(<span class="keyword">async</span> (req, res) => {
+    <span class="keyword">const</span> { method, url } = req;
+
+    <span class="comment">// Parse URL to get ID: /api/todos/123 -> 123</span>
+    <span class="keyword">const</span> match = url.match(<span class="string">/^\/api\/todos\/(\d+)$/</span>);
+    <span class="keyword">const</span> id = match ? parseInt(match[<span class="number">1</span>]) : <span class="keyword">null</span>;
+
+    <span class="comment">// GET /api/todos - List all todos</span>
+    <span class="keyword">if</span> (method === <span class="string">'GET'</span> && url === <span class="string">'/api/todos'</span>) {
+        sendJson(res, <span class="number">200</span>, todos);
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// GET /api/todos/:id - Get single todo</span>
+    <span class="keyword">if</span> (method === <span class="string">'GET'</span> && id) {
+        <span class="keyword">const</span> todo = todos.find(t => t.id === id);
+        <span class="keyword">if</span> (!todo) {
+            sendJson(res, <span class="number">404</span>, { error: <span class="string">'Todo not found'</span> });
+            <span class="keyword">return</span>;
+        }
+        sendJson(res, <span class="number">200</span>, todo);
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// POST /api/todos - Create todo</span>
+    <span class="keyword">if</span> (method === <span class="string">'POST'</span> && url === <span class="string">'/api/todos'</span>) {
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> data = <span class="keyword">await</span> getBody(req);
+            <span class="keyword">if</span> (!data.task) {
+                sendJson(res, <span class="number">400</span>, { error: <span class="string">'Task is required'</span> });
+                <span class="keyword">return</span>;
+            }
+            <span class="keyword">const</span> newTodo = {
+                id: nextId++,
+                task: data.task,
+                done: <span class="keyword">false</span>
+            };
+            todos.push(newTodo);
+            sendJson(res, <span class="number">201</span>, newTodo);
+        } <span class="keyword">catch</span> (e) {
+            sendJson(res, <span class="number">400</span>, { error: <span class="string">'Invalid JSON'</span> });
+        }
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// PUT /api/todos/:id - Update todo</span>
+    <span class="keyword">if</span> (method === <span class="string">'PUT'</span> && id) {
+        <span class="keyword">const</span> index = todos.findIndex(t => t.id === id);
+        <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+            sendJson(res, <span class="number">404</span>, { error: <span class="string">'Todo not found'</span> });
+            <span class="keyword">return</span>;
+        }
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> data = <span class="keyword">await</span> getBody(req);
+            todos[index] = { ...todos[index], ...data };
+            sendJson(res, <span class="number">200</span>, todos[index]);
+        } <span class="keyword">catch</span> (e) {
+            sendJson(res, <span class="number">400</span>, { error: <span class="string">'Invalid JSON'</span> });
+        }
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// DELETE /api/todos/:id - Delete todo</span>
+    <span class="keyword">if</span> (method === <span class="string">'DELETE'</span> && id) {
+        <span class="keyword">const</span> index = todos.findIndex(t => t.id === id);
+        <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+            sendJson(res, <span class="number">404</span>, { error: <span class="string">'Todo not found'</span> });
+            <span class="keyword">return</span>;
+        }
+        todos.splice(index, <span class="number">1</span>);
+        sendJson(res, <span class="number">200</span>, { message: <span class="string">'Todo deleted'</span> });
+        <span class="keyword">return</span>;
+    }
+
+    <span class="comment">// 404 for everything else</span>
+    sendJson(res, <span class="number">404</span>, { error: <span class="string">'Not Found'</span> });
+});
+
+server.listen(<span class="number">3000</span>, () => {
+    console.log(<span class="string">'Todo API running on http://localhost:3000'</span>);
+});</code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=iYM2zFP3Zn0" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">HTTP Methods Explained</div><div class="video-channel">Web Dev Simplified</div></div>
+</a>
+<a href="https://www.youtube.com/watch?v=iiADhChRriM" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">JSON Crash Course</div><div class="video-channel">Traversy Media</div></div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check: Day 3</h4>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">1. Which HTTP method should you use to create a new resource?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">POST</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">GET</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">PUT</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">DELETE</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> POST is used to create new resources. It sends data in the request body and typically returns the created resource with a 201 Created status code.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> POST is the standard method for creating new resources. GET retrieves, PUT replaces, and DELETE removes. POST creates something new on the server.</div>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">2. What does JSON.stringify() do?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Parses a JSON string into an object</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Validates JSON syntax</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Converts a JavaScript object to a JSON string</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Formats JSON for display</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> JSON.stringify() converts a JavaScript object into a JSON string. This is essential when sending data in HTTP responses. Use JSON.parse() for the reverse operation.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> JSON.stringify() converts objects to strings (serialize). JSON.parse() does the opposite - converts strings to objects (deserialize). Remember: stringify = make it a string.</div>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">3. What is the difference between PUT and PATCH?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">PUT creates, PATCH updates</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">PUT replaces entirely, PATCH updates partially</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">PUT is faster than PATCH</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">There is no difference</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> PUT replaces the entire resource - you send the complete new version. PATCH only updates specific fields you include, leaving others unchanged.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> PUT and PATCH both update resources, but differently. PUT replaces the whole resource (send everything). PATCH updates only the fields you specify (partial update).</div>
+</div>
+<div class="question" data-correct="3">
+<p class="question-text">4. What Content-Type header should you set for JSON responses?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">text/plain</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">text/html</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">text/json</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">application/json</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> application/json is the standard Content-Type for JSON data. This tells the client how to interpret the response body. Always set this header when returning JSON.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> The correct Content-Type for JSON is application/json. This is important because it tells browsers and clients how to parse the response body correctly.</div>
+</div>
+</div>
+<div class="completion-box">
+<h4>Day 3 Complete!</h4>
+<p>You now understand HTTP methods and can build APIs that Create, Read, Update, and Delete data. You also know JSON - the language APIs speak. This CRUD pattern is the foundation of almost every web application.</p>
+<p>Tomorrow, we introduce Express.js - a framework that makes building servers much easier and more organized.</p>
+</div>
+</section>
+<div class="page-nav">
+<a href="day2.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 2: Node.js Server</a>
+<a href="day4.html">Day 4: Express.js<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</div>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
