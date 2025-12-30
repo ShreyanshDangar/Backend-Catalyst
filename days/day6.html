@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 6: Learn MongoDB fundamentals - NoSQL databases, document storage, collections, and CRUD operations.">
+<title>Day 6: MongoDB Fundamentals | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html" class="active">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html" class="active"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 6</span>
+<h2>MongoDB Fundamentals</h2>
+<p>Your data currently lives in JavaScript arrays and vanishes when the server restarts. Today you learn to persist data permanently using MongoDB, a powerful NoSQL database.</p>
+</div>
+<h3>Why Databases Matter</h3>
+<p>In Day 5, we stored books in a JavaScript array. The moment we stopped the server, everything was lost. Real applications need <strong>persistent storage</strong> - data that survives server restarts, crashes, and updates.</p>
+<p>Databases provide:</p>
+<ul>
+<li><strong>Persistence</strong> - Data is written to disk and survives restarts</li>
+<li><strong>Scalability</strong> - Handle millions of records efficiently</li>
+<li><strong>Concurrent Access</strong> - Multiple users can read and write simultaneously</li>
+<li><strong>Data Integrity</strong> - Rules ensure data remains consistent</li>
+<li><strong>Query Power</strong> - Search, filter, and aggregate data easily</li>
+</ul>
+<h3>SQL vs NoSQL</h3>
+<p>There are two main database paradigms:</p>
+<div class="concept-box">
+<h4>SQL (Relational) Databases</h4>
+<p>MySQL, PostgreSQL, SQLite store data in <strong>tables</strong> with rows and columns. Data has a fixed structure (schema). Tables relate to each other through foreign keys.</p>
+<p>Best for: Financial systems, complex relationships, when data structure is well-defined upfront.</p>
+</div>
+<div class="concept-box">
+<h4>NoSQL (Non-Relational) Databases</h4>
+<p>MongoDB, Redis, CouchDB store data in flexible formats like documents or key-value pairs. Schema is flexible - different documents can have different fields.</p>
+<p>Best for: Rapid development, evolving requirements, JSON-heavy applications, high scalability needs.</p>
+</div>
+<div class="analogy">
+<div class="analogy-label">Real World Parallel</div>
+<p>SQL is like a spreadsheet - every row must have the same columns. NoSQL is like a filing cabinet - each folder can contain different types of papers with different formats.</p>
+</div>
+<h3>What is MongoDB?</h3>
+<p><strong>MongoDB</strong> is a document-oriented NoSQL database. Instead of tables and rows, it uses <strong>collections</strong> and <strong>documents</strong>. Documents are JSON-like objects that can have any structure.</p>
+<div class="diagram">
+<pre>
+┌──────────────────────┐          ┌──────────────────────┐
+│      SQL World       │          │    MongoDB World     │
+├──────────────────────┤          ├──────────────────────┤
+│ Database             │ ───────► │ Database             │
+│ Table                │ ───────► │ Collection           │
+│ Row                  │ ───────► │ Document             │
+│ Column               │ ───────► │ Field                │
+└──────────────────────┘          └──────────────────────┘
+</pre>
+</div>
+<p>A MongoDB document looks like this:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">MongoDB Document</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code>{
+    <span class="string">"_id"</span>: <span class="string">"507f1f77bcf86cd799439011"</span>,    <span class="comment">// Unique identifier auto-generated by MongoDB</span>
+    <span class="string">"name"</span>: <span class="string">"John Doe"</span>,                   <span class="comment">// String field</span>
+    <span class="string">"email"</span>: <span class="string">"john@example.com"</span>,          <span class="comment">// Another string field</span>
+    <span class="string">"age"</span>: <span class="number">28</span>,                             <span class="comment">// Number field</span>
+    <span class="string">"isActive"</span>: <span class="keyword">true</span>,                     <span class="comment">// Boolean field</span>
+    <span class="string">"roles"</span>: [<span class="string">"admin"</span>, <span class="string">"editor"</span>],         <span class="comment">// Array field</span>
+    <span class="string">"address"</span>: {                           <span class="comment">// Nested object (embedded document)</span>
+        <span class="string">"city"</span>: <span class="string">"New York"</span>,
+        <span class="string">"zip"</span>: <span class="string">"10001"</span>
+    },
+    <span class="string">"createdAt"</span>: <span class="string">"2024-01-15T10:30:00Z"</span>  <span class="comment">// Date stored as string or Date object</span>
+}</code></pre>
+</div>
+<p>Notice how flexible this is - you can nest objects, include arrays, and mix data types. Each document in a collection can have different fields.</p>
+<h3>Setting Up MongoDB</h3>
+<p>You have two options for using MongoDB:</p>
+<h4>Option 1: MongoDB Atlas (Cloud - Recommended for Beginners)</h4>
+<p>MongoDB Atlas is a free cloud-hosted database. No installation required.</p>
+<ol>
+<li>Go to <a href="https://www.mongodb.com/atlas" target="_blank">mongodb.com/atlas</a></li>
+<li>Create a free account</li>
+<li>Create a new cluster (choose the FREE tier)</li>
+<li>Click "Connect" and choose "Connect your application"</li>
+<li>Copy the connection string (looks like: <code>mongodb+srv://user:pass@cluster.mongodb.net/dbname</code>)</li>
+</ol>
+<h4>Option 2: Local Installation</h4>
+<p>For offline development, install MongoDB Community Server from <a href="https://www.mongodb.com/try/download/community" target="_blank">mongodb.com/download</a>.</p>
+<h3>MongoDB Shell Basics</h3>
+<p>Before connecting from Node.js, let us learn MongoDB commands using the shell. If using Atlas, use MongoDB Compass or the Atlas web interface.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">MongoDB Shell Commands</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Show all databases on the server</span>
+show dbs
+
+<span class="comment">// Switch to a database (creates it if it does not exist)</span>
+use myapp
+
+<span class="comment">// Show all collections in current database</span>
+show collections
+
+<span class="comment">// Create a collection by inserting a document</span>
+db.users.insertOne({ name: <span class="string">"Alice"</span>, email: <span class="string">"alice@example.com"</span> })
+
+<span class="comment">// Find all documents in a collection</span>
+db.users.find()
+
+<span class="comment">// Find with pretty formatting</span>
+db.users.find().pretty()</code></pre>
+</div>
+<h3>CRUD Operations in MongoDB</h3>
+<p>CRUD stands for Create, Read, Update, Delete - the four basic operations for any database.</p>
+<h4>CREATE - Inserting Documents</h4>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Insert Operations</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Insert a single document into the 'products' collection</span>
+<span class="comment">// MongoDB automatically creates the collection if it does not exist</span>
+db.products.insertOne({
+    name: <span class="string">"Laptop"</span>,           <span class="comment">// Product name as string</span>
+    price: <span class="number">999.99</span>,            <span class="comment">// Price as number (supports decimals)</span>
+    category: <span class="string">"Electronics"</span>,  <span class="comment">// Category for filtering</span>
+    inStock: <span class="keyword">true</span>,            <span class="comment">// Boolean for availability</span>
+    tags: [<span class="string">"computer"</span>, <span class="string">"portable"</span>]  <span class="comment">// Array of tags for search</span>
+})
+
+<span class="comment">// Insert multiple documents at once</span>
+<span class="comment">// More efficient than multiple insertOne calls</span>
+db.products.insertMany([
+    {
+        name: <span class="string">"Mouse"</span>,
+        price: <span class="number">29.99</span>,
+        category: <span class="string">"Electronics"</span>,
+        inStock: <span class="keyword">true</span>,
+        tags: [<span class="string">"computer"</span>, <span class="string">"accessory"</span>]
+    },
+    {
+        name: <span class="string">"Keyboard"</span>,
+        price: <span class="number">79.99</span>,
+        category: <span class="string">"Electronics"</span>,
+        inStock: <span class="keyword">false</span>,
+        tags: [<span class="string">"computer"</span>, <span class="string">"accessory"</span>, <span class="string">"mechanical"</span>]
+    },
+    {
+        name: <span class="string">"Headphones"</span>,
+        price: <span class="number">149.99</span>,
+        category: <span class="string">"Audio"</span>,
+        inStock: <span class="keyword">true</span>,
+        tags: [<span class="string">"audio"</span>, <span class="string">"wireless"</span>]
+    }
+])</code></pre>
+</div>
+<p>When you insert a document, MongoDB automatically adds an <code>_id</code> field if you do not provide one. This is a unique identifier called an <strong>ObjectId</strong>.</p>
+<h4>READ - Finding Documents</h4>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Find Operations</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Find ALL documents in the collection</span>
+<span class="comment">// Returns a cursor that iterates through results</span>
+db.products.find()
+
+<span class="comment">// Find documents matching a condition</span>
+<span class="comment">// This finds all products in the Electronics category</span>
+db.products.find({ category: <span class="string">"Electronics"</span> })
+
+<span class="comment">// Find ONE document (returns first match)</span>
+<span class="comment">// Useful when you expect only one result</span>
+db.products.findOne({ name: <span class="string">"Laptop"</span> })
+
+<span class="comment">// Find with multiple conditions (AND logic)</span>
+<span class="comment">// Both conditions must be true</span>
+db.products.find({
+    category: <span class="string">"Electronics"</span>,  <span class="comment">// Must be Electronics</span>
+    inStock: <span class="keyword">true</span>              <span class="comment">// AND must be in stock</span>
+})
+
+<span class="comment">// Comparison operators - find products over $50</span>
+<span class="comment">// $gt = greater than, $gte = greater than or equal</span>
+<span class="comment">// $lt = less than, $lte = less than or equal</span>
+<span class="comment">// $ne = not equal, $eq = equal</span>
+db.products.find({ price: { $gt: <span class="number">50</span> } })
+
+<span class="comment">// Find products priced between $25 and $100</span>
+db.products.find({
+    price: {
+        $gte: <span class="number">25</span>,   <span class="comment">// Greater than or equal to 25</span>
+        $lte: <span class="number">100</span>   <span class="comment">// Less than or equal to 100</span>
+    }
+})
+
+<span class="comment">// OR logic - find Electronics OR Audio products</span>
+db.products.find({
+    $or: [
+        { category: <span class="string">"Electronics"</span> },
+        { category: <span class="string">"Audio"</span> }
+    ]
+})
+
+<span class="comment">// Find documents where field is in a list of values</span>
+db.products.find({
+    category: { $in: [<span class="string">"Electronics"</span>, <span class="string">"Audio"</span>] }
+})
+
+<span class="comment">// Projection - return only specific fields</span>
+<span class="comment">// 1 means include, 0 means exclude</span>
+<span class="comment">// _id is included by default unless explicitly excluded</span>
+db.products.find(
+    { category: <span class="string">"Electronics"</span> },  <span class="comment">// Filter condition</span>
+    { name: <span class="number">1</span>, price: <span class="number">1</span>, _id: <span class="number">0</span> }   <span class="comment">// Only return name and price</span>
+)</code></pre>
+</div>
+<h4>UPDATE - Modifying Documents</h4>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Update Operations</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Update ONE document matching the filter</span>
+<span class="comment">// $set operator changes specific fields without affecting others</span>
+db.products.updateOne(
+    { name: <span class="string">"Laptop"</span> },           <span class="comment">// Filter: find document with this name</span>
+    { $set: { price: <span class="number">899.99</span> } }    <span class="comment">// Update: change price to new value</span>
+)
+
+<span class="comment">// Update multiple fields at once</span>
+db.products.updateOne(
+    { name: <span class="string">"Keyboard"</span> },
+    {
+        $set: {
+            price: <span class="number">89.99</span>,          <span class="comment">// Update price</span>
+            inStock: <span class="keyword">true</span>,          <span class="comment">// Update stock status</span>
+            updatedAt: <span class="keyword">new</span> Date()  <span class="comment">// Add new field with current timestamp</span>
+        }
+    }
+)
+
+<span class="comment">// Update ALL documents matching the filter</span>
+<span class="comment">// Be careful - this affects multiple documents!</span>
+db.products.updateMany(
+    { category: <span class="string">"Electronics"</span> },  <span class="comment">// All electronics</span>
+    { $set: { onSale: <span class="keyword">true</span> } }     <span class="comment">// Add onSale field to all</span>
+)
+
+<span class="comment">// Increment a numeric field</span>
+<span class="comment">// $inc adds the value (use negative to subtract)</span>
+db.products.updateOne(
+    { name: <span class="string">"Mouse"</span> },
+    { $inc: { price: <span class="number">5</span> } }  <span class="comment">// Increase price by 5</span>
+)
+
+<span class="comment">// Add item to an array field</span>
+db.products.updateOne(
+    { name: <span class="string">"Laptop"</span> },
+    { $push: { tags: <span class="string">"gaming"</span> } }  <span class="comment">// Add "gaming" to tags array</span>
+)
+
+<span class="comment">// Remove item from an array</span>
+db.products.updateOne(
+    { name: <span class="string">"Laptop"</span> },
+    { $pull: { tags: <span class="string">"gaming"</span> } }  <span class="comment">// Remove "gaming" from tags</span>
+)
+
+<span class="comment">// Upsert - update if exists, insert if not</span>
+<span class="comment">// Useful for "create or update" scenarios</span>
+db.products.updateOne(
+    { name: <span class="string">"Tablet"</span> },
+    { $set: { price: <span class="number">499</span>, category: <span class="string">"Electronics"</span> } },
+    { upsert: <span class="keyword">true</span> }  <span class="comment">// Create document if no match found</span>
+)</code></pre>
+</div>
+<h4>DELETE - Removing Documents</h4>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Delete Operations</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Delete ONE document matching the filter</span>
+<span class="comment">// Only deletes the first match if multiple exist</span>
+db.products.deleteOne({ name: <span class="string">"Tablet"</span> })
+
+<span class="comment">// Delete ALL documents matching the filter</span>
+<span class="comment">// WARNING: This can delete many documents!</span>
+db.products.deleteMany({ inStock: <span class="keyword">false</span> })
+
+<span class="comment">// Delete ALL documents in a collection</span>
+<span class="comment">// DANGER: This empties the entire collection!</span>
+db.products.deleteMany({})
+
+<span class="comment">// Drop (delete) an entire collection</span>
+<span class="comment">// DANGER: Collection and all its documents are gone!</span>
+db.products.drop()</code></pre>
+</div>
+<div class="important">
+<div class="important-label">Warning</div>
+<p>Delete operations are permanent. Always double-check your filter before running <code>deleteMany()</code>. In production, consider "soft deletes" (marking documents as deleted) instead of actual deletion.</p>
+</div>
+<h3>Advanced Queries</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Sorting, Limiting, and Skipping</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Sort results</span>
+<span class="comment">// 1 = ascending (A-Z, 0-9), -1 = descending (Z-A, 9-0)</span>
+db.products.find().sort({ price: <span class="number">1</span> })        <span class="comment">// Cheapest first</span>
+db.products.find().sort({ price: -<span class="number">1</span> })       <span class="comment">// Most expensive first</span>
+db.products.find().sort({ name: <span class="number">1</span> })         <span class="comment">// Alphabetical by name</span>
+
+<span class="comment">// Limit number of results</span>
+db.products.find().limit(<span class="number">5</span>)  <span class="comment">// Return only 5 documents</span>
+
+<span class="comment">// Skip results (for pagination)</span>
+db.products.find().skip(<span class="number">10</span>)  <span class="comment">// Skip first 10, return the rest</span>
+
+<span class="comment">// Combine for pagination</span>
+<span class="comment">// Page 1: skip 0, limit 10</span>
+<span class="comment">// Page 2: skip 10, limit 10</span>
+<span class="comment">// Page 3: skip 20, limit 10</span>
+db.products.find()
+    .sort({ createdAt: -<span class="number">1</span> })  <span class="comment">// Newest first</span>
+    .skip(<span class="number">20</span>)                  <span class="comment">// Skip first 20 (page 3)</span>
+    .limit(<span class="number">10</span>)                 <span class="comment">// Return 10 per page</span>
+
+<span class="comment">// Count documents matching a filter</span>
+db.products.countDocuments({ category: <span class="string">"Electronics"</span> })
+
+<span class="comment">// Check if any documents exist</span>
+db.products.findOne({ name: <span class="string">"Laptop"</span> }) !== <span class="keyword">null</span></code></pre>
+</div>
+<h3>Connecting from Node.js</h3>
+<p>Now let us connect to MongoDB from our Express application. We will use the official MongoDB driver.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Terminal</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Create a new project</span>
+mkdir mongodb-demo
+cd mongodb-demo
+npm init -y
+
+<span class="comment"># Install MongoDB driver and Express</span>
+npm install mongodb express</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">index.js - Complete MongoDB + Express Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Import required modules</span>
+<span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> { MongoClient, ObjectId } = require(<span class="string">'mongodb'</span>);
+
+<span class="comment">// Create Express application</span>
+<span class="keyword">const</span> app = express();
+
+<span class="comment">// Middleware to parse JSON request bodies</span>
+app.use(express.json());
+
+<span class="comment">// MongoDB connection string</span>
+<span class="comment">// Replace with your Atlas connection string or use localhost</span>
+<span class="keyword">const</span> uri = <span class="string">'mongodb://localhost:27017'</span>;
+
+<span class="comment">// Database and collection names</span>
+<span class="keyword">const</span> dbName = <span class="string">'shopdb'</span>;
+<span class="keyword">const</span> collectionName = <span class="string">'products'</span>;
+
+<span class="comment">// Variable to hold database connection</span>
+<span class="keyword">let</span> db;
+
+<span class="comment">// Connect to MongoDB when server starts</span>
+<span class="keyword">async</span> <span class="keyword">function</span> connectToMongo() {
+    <span class="keyword">try</span> {
+        <span class="comment">// Create a new MongoClient instance</span>
+        <span class="keyword">const</span> client = <span class="keyword">new</span> MongoClient(uri);
+
+        <span class="comment">// Connect to the MongoDB server</span>
+        <span class="keyword">await</span> client.connect();
+
+        <span class="comment">// Select the database</span>
+        db = client.db(dbName);
+
+        console.log(<span class="string">'Connected to MongoDB successfully!'</span>);
+    } <span class="keyword">catch</span> (error) {
+        console.error(<span class="string">'Failed to connect to MongoDB:'</span>, error);
+        process.exit(<span class="number">1</span>);  <span class="comment">// Exit if cannot connect</span>
+    }
+}
+
+<span class="comment">// GET all products</span>
+app.get(<span class="string">'/api/products'</span>, <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="comment">// Find all documents and convert cursor to array</span>
+        <span class="keyword">const</span> products = <span class="keyword">await</span> db
+            .collection(collectionName)
+            .find()
+            .toArray();
+
+        res.json(products);
+    } <span class="keyword">catch</span> (error) {
+        res.status(<span class="number">500</span>).json({ error: <span class="string">'Failed to fetch products'</span> });
+    }
+});
+
+<span class="comment">// GET single product by ID</span>
+app.get(<span class="string">'/api/products/:id'</span>, <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="comment">// Convert string ID to MongoDB ObjectId</span>
+        <span class="keyword">const</span> id = <span class="keyword">new</span> ObjectId(req.params.id);
+
+        <span class="comment">// Find document with matching _id</span>
+        <span class="keyword">const</span> product = <span class="keyword">await</span> db
+            .collection(collectionName)
+            .findOne({ _id: id });
+
+        <span class="keyword">if</span> (!product) {
+            <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Product not found'</span> });
+        }
+
+        res.json(product);
+    } <span class="keyword">catch</span> (error) {
+        res.status(<span class="number">400</span>).json({ error: <span class="string">'Invalid product ID'</span> });
+    }
+});
+
+<span class="comment">// POST create new product</span>
+app.post(<span class="string">'/api/products'</span>, <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="comment">// Extract data from request body</span>
+        <span class="keyword">const</span> { name, price, category, inStock } = req.body;
+
+        <span class="comment">// Validate required fields</span>
+        <span class="keyword">if</span> (!name || !price) {
+            <span class="keyword">return</span> res.status(<span class="number">400</span>).json({ error: <span class="string">'Name and price are required'</span> });
+        }
+
+        <span class="comment">// Create product document</span>
+        <span class="keyword">const</span> newProduct = {
+            name,
+            price,
+            category: category || <span class="string">'Uncategorized'</span>,
+            inStock: inStock !== <span class="keyword">undefined</span> ? inStock : <span class="keyword">true</span>,
+            createdAt: <span class="keyword">new</span> Date()
+        };
+
+        <span class="comment">// Insert into database</span>
+        <span class="keyword">const</span> result = <span class="keyword">await</span> db
+            .collection(collectionName)
+            .insertOne(newProduct);
+
+        <span class="comment">// Return created product with its new _id</span>
+        res.status(<span class="number">201</span>).json({
+            _id: result.insertedId,
+            ...newProduct
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.status(<span class="number">500</span>).json({ error: <span class="string">'Failed to create product'</span> });
+    }
+});
+
+<span class="comment">// PUT update product</span>
+app.put(<span class="string">'/api/products/:id'</span>, <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> id = <span class="keyword">new</span> ObjectId(req.params.id);
+        <span class="keyword">const</span> updates = req.body;
+
+        <span class="comment">// Add updatedAt timestamp</span>
+        updates.updatedAt = <span class="keyword">new</span> Date();
+
+        <span class="comment">// Update the document</span>
+        <span class="keyword">const</span> result = <span class="keyword">await</span> db
+            .collection(collectionName)
+            .updateOne(
+                { _id: id },
+                { $set: updates }
+            );
+
+        <span class="keyword">if</span> (result.matchedCount === <span class="number">0</span>) {
+            <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Product not found'</span> });
+        }
+
+        <span class="comment">// Fetch and return updated product</span>
+        <span class="keyword">const</span> updated = <span class="keyword">await</span> db
+            .collection(collectionName)
+            .findOne({ _id: id });
+
+        res.json(updated);
+    } <span class="keyword">catch</span> (error) {
+        res.status(<span class="number">400</span>).json({ error: <span class="string">'Invalid product ID or data'</span> });
+    }
+});
+
+<span class="comment">// DELETE product</span>
+app.delete(<span class="string">'/api/products/:id'</span>, <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> id = <span class="keyword">new</span> ObjectId(req.params.id);
+
+        <span class="comment">// Delete the document</span>
+        <span class="keyword">const</span> result = <span class="keyword">await</span> db
+            .collection(collectionName)
+            .deleteOne({ _id: id });
+
+        <span class="keyword">if</span> (result.deletedCount === <span class="number">0</span>) {
+            <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Product not found'</span> });
+        }
+
+        res.json({ message: <span class="string">'Product deleted successfully'</span> });
+    } <span class="keyword">catch</span> (error) {
+        res.status(<span class="number">400</span>).json({ error: <span class="string">'Invalid product ID'</span> });
+    }
+});
+
+<span class="comment">// Start server after connecting to database</span>
+<span class="keyword">const</span> PORT = <span class="number">3000</span>;
+
+connectToMongo().then(() => {
+    app.listen(PORT, () => {
+        console.log(<span class="string">`Server running on http://localhost:${PORT}`</span>);
+    });
+});</code></pre>
+</div>
+<h3>Understanding ObjectId</h3>
+<p>MongoDB uses <strong>ObjectId</strong> as the default identifier type. It is a 12-byte value that includes:</p>
+<ul>
+<li>4-byte timestamp (seconds since Unix epoch)</li>
+<li>5-byte random value (unique per machine/process)</li>
+<li>3-byte incrementing counter</li>
+</ul>
+<p>This makes ObjectIds globally unique without coordination between servers.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Working with ObjectId</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> { ObjectId } = require(<span class="string">'mongodb'</span>);
+
+<span class="comment">// Convert string to ObjectId for queries</span>
+<span class="keyword">const</span> id = <span class="keyword">new</span> ObjectId(<span class="string">'507f1f77bcf86cd799439011'</span>);
+
+<span class="comment">// Check if a string is a valid ObjectId</span>
+<span class="keyword">function</span> isValidObjectId(str) {
+    <span class="keyword">try</span> {
+        <span class="keyword">return</span> <span class="keyword">new</span> ObjectId(str).toString() === str;
+    } <span class="keyword">catch</span> {
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+}
+
+<span class="comment">// Generate a new ObjectId</span>
+<span class="keyword">const</span> newId = <span class="keyword">new</span> ObjectId();
+
+<span class="comment">// Get timestamp from ObjectId</span>
+<span class="keyword">const</span> timestamp = id.getTimestamp();  <span class="comment">// Returns Date object</span></code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=ofme2o29ngU" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">MongoDB Crash Course 2024</div><div class="video-channel">Traversy Media</div></div>
+</a>
+<a href="https://www.youtube.com/watch?v=J6mDkcqU_ZE" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">MongoDB Complete Tutorial</div><div class="video-channel">Net Ninja</div></div>
+</a>
+</div>
+<div class="project-box">
+<span class="project-label">Mini Project</span>
+<h4>Blog Posts Database</h4>
+<p>Create a MongoDB-backed API for blog posts:</p>
+<ul>
+<li><code>GET /api/posts</code> - Get all posts (support ?limit and ?skip for pagination)</li>
+<li><code>GET /api/posts/:id</code> - Get single post</li>
+<li><code>POST /api/posts</code> - Create post (title, content, author, tags array)</li>
+<li><code>PUT /api/posts/:id</code> - Update post</li>
+<li><code>DELETE /api/posts/:id</code> - Delete post</li>
+<li><code>GET /api/posts/search?q=keyword</code> - Search posts by title</li>
+</ul>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check: Day 6</h4>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">1. In MongoDB terminology, what is equivalent to a "row" in SQL databases?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Collection</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Document</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Field</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Database</span></div>
+</div>
+<div class="feedback correct"><strong>Correct.</strong> A document in MongoDB is equivalent to a row in SQL. Documents are JSON-like objects containing field-value pairs. A collection holds multiple documents, similar to how a table holds multiple rows.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> The mapping is: Database = Database, Collection = Table, Document = Row, Field = Column. Documents are the individual records stored in collections.</div>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">2. Which operator would you use to find all products with price greater than 100?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">{ price: { $more: 100 } }</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">{ price: { $above: 100 } }</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">{ price: { $gt: 100 } }</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">{ price: > 100 }</span></div>
+</div>
+<div class="feedback correct"><strong>Correct.</strong> $gt means "greater than". MongoDB comparison operators include: $gt (>), $gte (>=), $lt (<), $lte (<=), $eq (=), $ne (!=). These are used inside the field value object.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> MongoDB uses specific operators prefixed with $. For comparison: $gt (greater than), $gte (greater than or equal), $lt (less than), $lte (less than or equal), $eq (equal), $ne (not equal).</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. What does the $set operator do in an update operation?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Modifies specific fields without affecting others</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Replaces the entire document</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Deletes the specified fields</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Creates a new collection</span></div>
+</div>
+<div class="feedback correct"><strong>Correct.</strong> $set updates only the fields you specify, leaving all other fields unchanged. Without $set, MongoDB would replace the entire document with your new object. Always use $set for partial updates.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> $set is crucial for partial updates. It changes only the specified fields. Without it, updateOne would try to replace the whole document (except _id). Other update operators include $inc, $push, $pull.</div>
+</div>
+<div class="question" data-correct="3">
+<p class="question-text">4. What is the purpose of ObjectId in MongoDB?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">To encrypt document data</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">To compress documents</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">To connect to the database</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">To uniquely identify documents</span></div>
+</div>
+<div class="feedback correct"><strong>Correct.</strong> ObjectId is a 12-byte unique identifier auto-generated for each document's _id field. It includes timestamp, machine identifier, process ID, and a counter, ensuring global uniqueness without coordination.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> ObjectId serves as the primary key for documents. It is automatically generated and guaranteed to be unique across all documents. It also contains an embedded timestamp, useful for knowing when a document was created.</div>
+</div>
+</div>
+</section>
+<div class="page-nav">
+<a href="day5.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 5: REST APIs</a>
+<a href="day7.html">Day 7: Mongoose ODM<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</div>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
