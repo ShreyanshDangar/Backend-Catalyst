@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 1: Understand how the internet works - client-server model, HTTP protocol, DNS, ports, and the request-response cycle.">
+<title>Day 1: How The Internet Works | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html" class="active">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html" class="active"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 1</span>
+<h2>How The Internet Works</h2>
+<p>Before writing a single line of backend code, you need to understand what happens when you type a URL into your browser. This foundational knowledge makes everything else click into place.</p>
+</div>
+<h3>The Big Picture</h3>
+<p>When you visit a website, you are not "going" anywhere. Your computer is having a <strong>conversation</strong> with another computer somewhere in the world. Your browser (the <strong>client</strong>) sends a request, and a web server responds with data. This is the <strong>client-server model</strong>.</p>
+<div class="diagram">
+<pre>
+        ┌─────────────────────┐                    ┌─────────────────────┐
+        │    YOUR COMPUTER    │                    │     WEB SERVER      │
+        │      (Client)       │                    │      (Backend)      │
+        └─────────────────────┘                    └─────────────────────┘
+          │                                           │
+          │  ══════ HTTP Request ═════════════════►   │
+          │         "GET /index.html"                 │
+          │                                           │
+          │  ◄═════ HTTP Response ════════════════    │
+          │         HTML, CSS, JS, Images             │
+          │                                           │
+</pre>
+</div>
+<div class="analogy">
+<div class="analogy-label">Real World Analogy</div>
+<p>Think of it like ordering food at a restaurant. You (the client) tell the waiter (HTTP) what you want. The waiter takes your order to the kitchen (server), which prepares your food (data) and sends it back via the waiter. You never go to the kitchen yourself - you just make requests and receive responses.</p>
+</div>
+<h3>What is a Server?</h3>
+<p>A <strong>server</strong> is just a computer that is always on, connected to the internet, and running software that listens for incoming requests. When a request arrives, it processes it and sends back a response.</p>
+<p>There is nothing magical about servers - they are regular computers (often more powerful) running special software. Your own laptop can be a server if you run the right program on it.</p>
+<div class="concept-box">
+<h4>Types of Servers</h4>
+<ul>
+<li><strong>Web Server</strong> - Serves websites and web applications (Apache, Nginx, Node.js)</li>
+<li><strong>Database Server</strong> - Stores and retrieves data (MySQL, MongoDB, PostgreSQL)</li>
+<li><strong>File Server</strong> - Stores and shares files across a network</li>
+<li><strong>Mail Server</strong> - Handles sending and receiving emails</li>
+<li><strong>API Server</strong> - Provides data to applications (what we will build!)</li>
+</ul>
+</div>
+<h3>IP Addresses - Finding Computers on the Internet</h3>
+<p>Every device connected to the internet has a unique address called an <strong>IP address</strong>. It is like a phone number for computers.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">IP Address Examples</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># IPv4 - Traditional format (32-bit)</span>
+192.168.1.1        <span class="comment"># Your home router (private)</span>
+8.8.8.8            <span class="comment"># Google's DNS server</span>
+142.250.190.78     <span class="comment"># One of Google's web servers</span>
+
+<span class="comment"># IPv6 - Newer format (128-bit) for more addresses</span>
+2001:4860:4860::8888   <span class="comment"># Google's DNS in IPv6</span>
+
+<span class="comment"># Special addresses</span>
+127.0.0.1          <span class="comment"># localhost - your own computer</span>
+0.0.0.0            <span class="comment"># All network interfaces</span></code></pre>
+</div>
+<p>IPv4 addresses are running out (only ~4.3 billion possible), which is why IPv6 was created. But we will mostly work with IPv4 in local development.</p>
+<h3>DNS - The Internet's Phone Book</h3>
+<p>Remembering <code>142.250.190.78</code> to visit Google would be terrible. That is why we have the <strong>Domain Name System (DNS)</strong>. It translates human-friendly names like <code>google.com</code> into IP addresses.</p>
+<div class="diagram">
+<pre>
+        You type: google.com
+                  │
+                  ▼
+        ┌─────────────────────┐
+        │     DNS Server      │
+        │                     │
+        │  google.com ──────► │ ────► 142.250.190.78
+        │                     │
+        └─────────────────────┘
+                  │
+                  ▼
+     Browser connects to 142.250.190.78
+</pre>
+</div>
+<div class="steps">
+<div class="step">
+<p><strong>You type a URL</strong> - Your browser checks its cache for a recent DNS lookup.</p>
+</div>
+<div class="step">
+<p><strong>Query DNS Server</strong> - If not cached, your computer asks a DNS server (usually your ISP's or 8.8.8.8).</p>
+</div>
+<div class="step">
+<p><strong>DNS Resolution</strong> - The DNS server may query other DNS servers in a hierarchy until it finds the IP.</p>
+</div>
+<div class="step">
+<p><strong>IP Returned</strong> - Your computer receives the IP address and can now connect to the server.</p>
+</div>
+</div>
+<h3>Ports - Multiple Services, One Computer</h3>
+<p>A single server can run multiple services (web, email, database). <strong>Ports</strong> differentiate between them. Think of IP as a building address and port as the apartment number.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Common Ports</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Well-known ports (0-1023) - require admin privileges</span>
+<span class="number">80</span>     <span class="comment"># HTTP - unencrypted web traffic</span>
+<span class="number">443</span>    <span class="comment"># HTTPS - encrypted web traffic (SSL/TLS)</span>
+<span class="number">22</span>     <span class="comment"># SSH - secure shell for remote access</span>
+<span class="number">21</span>     <span class="comment"># FTP - file transfer</span>
+<span class="number">25</span>     <span class="comment"># SMTP - sending email</span>
+<span class="number">53</span>     <span class="comment"># DNS - domain name resolution</span>
+
+<span class="comment"># Registered ports (1024-49151)</span>
+<span class="number">3000</span>   <span class="comment"># Common for Node.js development</span>
+<span class="number">3306</span>   <span class="comment"># MySQL database</span>
+<span class="number">5432</span>   <span class="comment"># PostgreSQL database</span>
+<span class="number">27017</span>  <span class="comment"># MongoDB database</span>
+<span class="number">6379</span>   <span class="comment"># Redis cache</span>
+<span class="number">8080</span>   <span class="comment"># Alternative HTTP port</span></code></pre>
+</div>
+<p>When you visit <code>https://google.com</code>, you are actually connecting to <code>google.com:443</code>. The <code>:443</code> is implied because HTTPS defaults to port 443.</p>
+<div class="important">
+<div class="important-label">Key Insight</div>
+<p>In development, we often use ports like 3000 or 8080 because ports below 1024 require administrator privileges. That is why you will see <code>localhost:3000</code> throughout this course.</p>
+</div>
+<h3>HTTP - The Language of the Web</h3>
+<p><strong>HTTP (HyperText Transfer Protocol)</strong> is the protocol that defines how messages are formatted and transmitted on the web. Every web interaction uses HTTP (or its secure version, HTTPS).</p>
+<h4>HTTP Request Structure</h4>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">HTTP Request Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Request Line: METHOD PATH HTTP-VERSION</span>
+<span class="keyword">GET</span> /api/users HTTP/1.1
+
+<span class="comment"># Headers: metadata about the request</span>
+<span class="variable">Host</span>: example.com
+<span class="variable">User-Agent</span>: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+<span class="variable">Accept</span>: application/json
+<span class="variable">Authorization</span>: Bearer eyJhbGciOiJIUzI1...
+
+<span class="comment"># Empty line separates headers from body</span>
+
+<span class="comment"># Body (optional - used in POST, PUT requests)</span>
+{
+  <span class="string">"name"</span>: <span class="string">"John"</span>,
+  <span class="string">"email"</span>: <span class="string">"john@example.com"</span>
+}</code></pre>
+</div>
+<h4>HTTP Response Structure</h4>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">HTTP Response Example</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Status Line: HTTP-VERSION STATUS-CODE REASON</span>
+HTTP/1.1 <span class="number">200</span> OK
+
+<span class="comment"># Response Headers</span>
+<span class="variable">Content-Type</span>: application/json
+<span class="variable">Content-Length</span>: 1234
+<span class="variable">Date</span>: Mon, 15 Jan 2024 10:30:00 GMT
+<span class="variable">Server</span>: nginx/1.18.0
+
+<span class="comment"># Empty line</span>
+
+<span class="comment"># Response Body</span>
+{
+  <span class="string">"users"</span>: [
+    { <span class="string">"id"</span>: <span class="number">1</span>, <span class="string">"name"</span>: <span class="string">"Alice"</span> },
+    { <span class="string">"id"</span>: <span class="number">2</span>, <span class="string">"name"</span>: <span class="string">"Bob"</span> }
+  ]
+}</code></pre>
+</div>
+<h3>HTTP Status Codes</h3>
+<p>Status codes tell the client what happened with their request. They are grouped by the first digit:</p>
+<div class="concept-box">
+<h4>Status Code Categories</h4>
+<ul>
+<li><strong>1xx (Informational)</strong> - Request received, continuing process</li>
+<li><strong>2xx (Success)</strong> - Request successfully received and processed</li>
+<li><strong>3xx (Redirection)</strong> - Further action needed to complete request</li>
+<li><strong>4xx (Client Error)</strong> - Request contains bad syntax or cannot be fulfilled</li>
+<li><strong>5xx (Server Error)</strong> - Server failed to fulfill a valid request</li>
+</ul>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Common Status Codes</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Success</span>
+<span class="number">200</span> OK                    <span class="comment"># Standard success response</span>
+<span class="number">201</span> Created               <span class="comment"># Resource created (POST success)</span>
+<span class="number">204</span> No Content            <span class="comment"># Success but no body (DELETE success)</span>
+
+<span class="comment"># Redirection</span>
+<span class="number">301</span> Moved Permanently     <span class="comment"># URL has permanently changed</span>
+<span class="number">302</span> Found                 <span class="comment"># Temporary redirect</span>
+<span class="number">304</span> Not Modified          <span class="comment"># Cached version is still valid</span>
+
+<span class="comment"># Client Errors</span>
+<span class="number">400</span> Bad Request           <span class="comment"># Malformed request syntax</span>
+<span class="number">401</span> Unauthorized          <span class="comment"># Authentication required</span>
+<span class="number">403</span> Forbidden             <span class="comment"># Authenticated but not allowed</span>
+<span class="number">404</span> Not Found             <span class="comment"># Resource does not exist</span>
+<span class="number">422</span> Unprocessable Entity  <span class="comment"># Validation error</span>
+<span class="number">429</span> Too Many Requests     <span class="comment"># Rate limiting</span>
+
+<span class="comment"># Server Errors</span>
+<span class="number">500</span> Internal Server Error <span class="comment"># Generic server error</span>
+<span class="number">502</span> Bad Gateway           <span class="comment"># Invalid response from upstream</span>
+<span class="number">503</span> Service Unavailable   <span class="comment"># Server temporarily overloaded</span>
+<span class="number">504</span> Gateway Timeout       <span class="comment"># Upstream server timeout</span></code></pre>
+</div>
+<h3>The Complete Request Journey</h3>
+<p>Let us trace what happens when you type <code>https://example.com/about</code> and press Enter:</p>
+<div class="steps">
+<div class="step">
+<p><strong>URL Parsing</strong> - Browser parses the URL: protocol (https), domain (example.com), path (/about)</p>
+</div>
+<div class="step">
+<p><strong>DNS Lookup</strong> - Browser asks DNS for the IP address of example.com</p>
+</div>
+<div class="step">
+<p><strong>TCP Connection</strong> - Browser establishes a connection to the IP on port 443</p>
+</div>
+<div class="step">
+<p><strong>TLS Handshake</strong> - Since HTTPS, browser and server establish encrypted connection</p>
+</div>
+<div class="step">
+<p><strong>HTTP Request</strong> - Browser sends GET /about HTTP/1.1 with headers</p>
+</div>
+<div class="step">
+<p><strong>Server Processing</strong> - Server receives request, runs code, queries database if needed</p>
+</div>
+<div class="step">
+<p><strong>HTTP Response</strong> - Server sends back status code, headers, and HTML body</p>
+</div>
+<div class="step">
+<p><strong>Rendering</strong> - Browser parses HTML, requests CSS/JS/images, renders the page</p>
+</div>
+</div>
+<h3>HTTPS and Security</h3>
+<p><strong>HTTPS</strong> is HTTP with encryption. It uses TLS (Transport Layer Security) to encrypt all data between client and server. This prevents:</p>
+<ul>
+<li><strong>Eavesdropping</strong> - No one can read your data in transit</li>
+<li><strong>Tampering</strong> - Data cannot be modified without detection</li>
+<li><strong>Impersonation</strong> - Certificates verify server identity</li>
+</ul>
+<div class="important">
+<div class="important-label">Always Use HTTPS</div>
+<p>In production, ALWAYS use HTTPS. Modern browsers mark HTTP sites as "Not Secure." For local development, HTTP on localhost is fine since traffic never leaves your machine.</p>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=7_LPdttKXPc" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">How The Internet Works in 5 Minutes</div><div class="video-channel">Aaron</div></div>
+</a>
+<a href="https://www.youtube.com/watch?v=hJHvdBlSxug" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">HTTP Crash Course & Exploration</div><div class="video-channel">Traversy Media</div></div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check: Day 1</h4>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">1. What does DNS do?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Encrypts web traffic</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Stores website files</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Translates domain names to IP addresses</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Manages database connections</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> DNS (Domain Name System) acts like a phone book for the internet, converting human-readable domain names (like google.com) into machine-readable IP addresses (like 142.250.190.78).</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> DNS stands for Domain Name System. Its sole job is to translate human-friendly domain names into IP addresses that computers use to identify each other.</div>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">2. What HTTP status code indicates a resource was not found?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">200</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">404</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">500</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">301</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> 404 Not Found means the server could not find the requested resource. It is one of the most common HTTP errors you will encounter. 4xx codes indicate client-side errors.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> 404 is the "Not Found" status code. 200 means success, 500 means server error, and 301 means permanent redirect. The 4xx range indicates client errors.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. Why do we use port 3000 in development instead of port 80?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Ports below 1024 require administrator privileges</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Port 80 is slower than port 3000</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Port 3000 is more secure</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Browsers only work with port 3000</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> On most operating systems, binding to ports below 1024 (called "well-known ports") requires root or administrator privileges. Using ports like 3000 or 8080 avoids this requirement during development.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> The reason is security-related but not about port 3000 being more secure. Ports below 1024 are privileged ports that require admin rights. Development servers use higher ports to avoid needing elevated permissions.</div>
+</div>
+<div class="question" data-correct="3">
+<p class="question-text">4. In the client-server model, which sends the request?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">The server</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">The database</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">DNS</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">The client</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> The client (like your web browser) initiates communication by sending requests. The server listens for these requests and sends back responses. This request-response cycle is fundamental to web communication.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> In the client-server model, the client always initiates the request. Your browser is a client - it asks servers for web pages. Servers wait for requests and then respond to them.</div>
+</div>
+</div>
+<div class="completion-box">
+<h4>Day 1 Complete!</h4>
+<p>You now understand the fundamentals of how the internet works. You know about clients and servers, IP addresses, DNS, ports, HTTP, and status codes. This knowledge will help you understand everything we build going forward.</p>
+<p>Tomorrow, we will use this knowledge to create your very first Node.js server!</p>
+</div>
+</section>
+<div class="page-nav">
+<a href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Home</a>
+<a href="day2.html">Day 2: Node.js Server<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</div>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
