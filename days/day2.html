@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 2: Build your first Node.js server from scratch. Learn about Node.js, modules, and creating HTTP servers.">
+<title>Day 2: Your First Node.js Server | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html" class="active">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html" class="active"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 2</span>
+<h2>Your First Node.js Server</h2>
+<p>Today we move from theory to practice. You will install Node.js, understand how it works, and build a working web server from scratch - no frameworks, just pure Node.js.</p>
+</div>
+<h3>What is Node.js?</h3>
+<p><strong>Node.js</strong> is a JavaScript runtime built on Chrome's V8 engine. It lets you run JavaScript outside the browser - on your computer, on servers, anywhere. Before Node.js, JavaScript could only run in browsers.</p>
+<div class="analogy">
+<div class="analogy-label">Real World Analogy</div>
+<p>JavaScript in a browser is like a chef who can only work in one specific restaurant kitchen. Node.js is like giving that chef their own portable kitchen - now they can cook anywhere, not just in that one restaurant.</p>
+</div>
+<div class="concept-box">
+<h4>Why Node.js for Backend?</h4>
+<ul>
+<li><strong>Same Language</strong> - Use JavaScript for both frontend and backend</li>
+<li><strong>Non-blocking I/O</strong> - Handles thousands of concurrent connections efficiently</li>
+<li><strong>NPM Ecosystem</strong> - Over 2 million packages available</li>
+<li><strong>Fast Execution</strong> - V8 engine compiles JavaScript to machine code</li>
+<li><strong>Active Community</strong> - Huge community, tons of resources and jobs</li>
+</ul>
+</div>
+<h3>Installing Node.js</h3>
+<p>Download Node.js from <a href="https://nodejs.org" target="_blank">nodejs.org</a>. Choose the <strong>LTS (Long Term Support)</strong> version for stability.</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Verify Installation</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Check Node.js version</span>
+node --version
+<span class="comment"># Output: v20.x.x (or similar)</span>
+
+<span class="comment"># Check npm version (Node Package Manager - comes with Node)</span>
+npm --version
+<span class="comment"># Output: 10.x.x (or similar)</span>
+
+<span class="comment"># Run JavaScript in terminal (REPL mode)</span>
+node
+> console.log(<span class="string">"Hello from Node!"</span>)
+Hello from Node!
+> .exit</code></pre>
+</div>
+<h3>Your First Node.js File</h3>
+<p>Create a new folder for your project and create a file called <code>app.js</code>:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">app.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// This runs on your computer, NOT in a browser</span>
+console.log(<span class="string">"Hello from Node.js!"</span>);
+
+<span class="comment">// Node has access to things browsers don't</span>
+console.log(<span class="string">"Current directory:"</span>, __dirname);
+console.log(<span class="string">"Current file:"</span>, __filename);
+console.log(<span class="string">"Process ID:"</span>, process.pid);
+console.log(<span class="string">"Node version:"</span>, process.version);</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Terminal</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Run the file with node</span>
+node app.js
+
+<span class="comment"># Output:</span>
+Hello from Node.js!
+Current directory: /Users/you/myproject
+Current file: /Users/you/myproject/app.js
+Process ID: 12345
+Node version: v20.10.0</code></pre>
+</div>
+<h3>Understanding Modules</h3>
+<p>Node.js organizes code into <strong>modules</strong>. There are three types:</p>
+<div class="concept-box">
+<h4>Types of Modules</h4>
+<ul>
+<li><strong>Core Modules</strong> - Built into Node.js (http, fs, path, os)</li>
+<li><strong>Local Modules</strong> - Files you create in your project</li>
+<li><strong>Third-party Modules</strong> - Installed via npm (express, lodash)</li>
+</ul>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Using Core Modules</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Import core modules using require()</span>
+<span class="keyword">const</span> os = require(<span class="string">'os'</span>);        <span class="comment">// Operating system info</span>
+<span class="keyword">const</span> path = require(<span class="string">'path'</span>);    <span class="comment">// File path utilities</span>
+<span class="keyword">const</span> fs = require(<span class="string">'fs'</span>);        <span class="comment">// File system operations</span>
+
+<span class="comment">// OS module examples</span>
+console.log(<span class="string">"Platform:"</span>, os.platform());     <span class="comment">// darwin, win32, linux</span>
+console.log(<span class="string">"CPU Cores:"</span>, os.cpus().length);
+console.log(<span class="string">"Free Memory:"</span>, os.freemem() / <span class="number">1024</span> / <span class="number">1024</span>, <span class="string">"MB"</span>);
+console.log(<span class="string">"Home Directory:"</span>, os.homedir());
+
+<span class="comment">// Path module examples</span>
+<span class="keyword">const</span> filePath = <span class="string">'/users/john/documents/file.txt'</span>;
+console.log(<span class="string">"Directory:"</span>, path.dirname(filePath));   <span class="comment">// /users/john/documents</span>
+console.log(<span class="string">"Filename:"</span>, path.basename(filePath));   <span class="comment">// file.txt</span>
+console.log(<span class="string">"Extension:"</span>, path.extname(filePath));   <span class="comment">// .txt</span>
+
+<span class="comment">// Join paths safely (handles / vs \ across OS)</span>
+<span class="keyword">const</span> fullPath = path.join(__dirname, <span class="string">'data'</span>, <span class="string">'users.json'</span>);
+console.log(<span class="string">"Full path:"</span>, fullPath);</code></pre>
+</div>
+<h3>Creating Your Own Modules</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">math.js - Your custom module</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Define functions in this module</span>
+<span class="keyword">function</span> add(a, b) {
+    <span class="keyword">return</span> a + b;
+}
+
+<span class="keyword">function</span> subtract(a, b) {
+    <span class="keyword">return</span> a - b;
+}
+
+<span class="keyword">function</span> multiply(a, b) {
+    <span class="keyword">return</span> a * b;
+}
+
+<span class="comment">// Export what you want other files to access</span>
+module.exports = {
+    add,
+    subtract,
+    multiply
+};
+
+<span class="comment">// Alternative: export individually</span>
+<span class="comment">// module.exports.add = add;</span>
+<span class="comment">// module.exports.subtract = subtract;</span></code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">app.js - Using your module</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Import your custom module (use ./ for local files)</span>
+<span class="keyword">const</span> math = require(<span class="string">'./math'</span>);
+
+console.log(math.add(<span class="number">5</span>, <span class="number">3</span>));       <span class="comment">// 8</span>
+console.log(math.subtract(<span class="number">10</span>, <span class="number">4</span>)); <span class="comment">// 6</span>
+console.log(math.multiply(<span class="number">3</span>, <span class="number">7</span>));  <span class="comment">// 21</span>
+
+<span class="comment">// Or use destructuring</span>
+<span class="keyword">const</span> { add, multiply } = require(<span class="string">'./math'</span>);
+console.log(add(<span class="number">2</span>, <span class="number">2</span>));  <span class="comment">// 4</span></code></pre>
+</div>
+<h3>The HTTP Module - Building a Server</h3>
+<p>Now for the main event - creating a web server. Node.js has a built-in <code>http</code> module for this:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">server.js - Basic HTTP Server</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Import the http module</span>
+<span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+
+<span class="comment">// Create a server that handles incoming requests</span>
+<span class="comment">// The callback runs for EVERY incoming request</span>
+<span class="keyword">const</span> server = http.createServer((req, res) => {
+    <span class="comment">// req = information about the incoming request</span>
+    <span class="comment">// res = object we use to send back a response</span>
+
+    <span class="comment">// Log every request that comes in</span>
+    console.log(<span class="string">`Request: ${req.method} ${req.url}`</span>);
+
+    <span class="comment">// Set the response status code and headers</span>
+    res.statusCode = <span class="number">200</span>;
+    res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>);
+
+    <span class="comment">// Send the response body and end the response</span>
+    res.end(<span class="string">'Hello, World!'</span>);
+});
+
+<span class="comment">// Start listening for requests on port 3000</span>
+<span class="keyword">const</span> PORT = <span class="number">3000</span>;
+server.listen(PORT, () => {
+    console.log(<span class="string">`Server running at http://localhost:${PORT}/`</span>);
+});</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Terminal</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Start the server</span>
+node server.js
+<span class="comment"># Output: Server running at http://localhost:3000/</span>
+
+<span class="comment"># Open http://localhost:3000 in your browser</span>
+<span class="comment"># You'll see "Hello, World!"</span>
+
+<span class="comment"># Press Ctrl+C to stop the server</span></code></pre>
+</div>
+<div class="important">
+<div class="important-label">Key Insight</div>
+<p>The server keeps running until you stop it. It sits there waiting for requests. Every time someone visits your URL, the callback function runs. This is the foundation of all backend development.</p>
+</div>
+<h3>Understanding Request and Response</h3>
+<p>Let us explore the <code>req</code> and <code>res</code> objects more deeply:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Examining the Request Object</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+
+<span class="keyword">const</span> server = http.createServer((req, res) => {
+    <span class="comment">// Request method: GET, POST, PUT, DELETE, etc.</span>
+    console.log(<span class="string">'Method:'</span>, req.method);
+
+    <span class="comment">// The URL path requested</span>
+    console.log(<span class="string">'URL:'</span>, req.url);
+
+    <span class="comment">// Request headers (metadata)</span>
+    console.log(<span class="string">'Headers:'</span>, req.headers);
+
+    <span class="comment">// Useful headers</span>
+    console.log(<span class="string">'User-Agent:'</span>, req.headers[<span class="string">'user-agent'</span>]);
+    console.log(<span class="string">'Host:'</span>, req.headers.host);
+
+    res.end(<span class="string">'Check your terminal for request details!'</span>);
+});
+
+server.listen(<span class="number">3000</span>);</code></pre>
+</div>
+<h3>Routing - Different Responses for Different URLs</h3>
+<p>A real server needs to respond differently based on the URL. This is called <strong>routing</strong>:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">server.js - Basic Routing</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+
+<span class="keyword">const</span> server = http.createServer((req, res) => {
+    <span class="comment">// Get the URL path</span>
+    <span class="keyword">const</span> url = req.url;
+    <span class="keyword">const</span> method = req.method;
+
+    <span class="comment">// Route: Home page</span>
+    <span class="keyword">if</span> (url === <span class="string">'/'</span> && method === <span class="string">'GET'</span>) {
+        res.statusCode = <span class="number">200</span>;
+        res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);
+        res.end(<span class="string">'&lt;h1&gt;Welcome to the Home Page&lt;/h1&gt;'</span>);
+    }
+    <span class="comment">// Route: About page</span>
+    <span class="keyword">else if</span> (url === <span class="string">'/about'</span> && method === <span class="string">'GET'</span>) {
+        res.statusCode = <span class="number">200</span>;
+        res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);
+        res.end(<span class="string">'&lt;h1&gt;About Us&lt;/h1&gt;&lt;p&gt;We are learning Node.js!&lt;/p&gt;'</span>);
+    }
+    <span class="comment">// Route: API endpoint</span>
+    <span class="keyword">else if</span> (url === <span class="string">'/api/data'</span> && method === <span class="string">'GET'</span>) {
+        res.statusCode = <span class="number">200</span>;
+        res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);
+        <span class="keyword">const</span> data = {
+            message: <span class="string">'Hello from the API!'</span>,
+            timestamp: <span class="keyword">new</span> Date().toISOString()
+        };
+        res.end(JSON.stringify(data));
+    }
+    <span class="comment">// Route: 404 Not Found (no matching route)</span>
+    <span class="keyword">else</span> {
+        res.statusCode = <span class="number">404</span>;
+        res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);
+        res.end(<span class="string">'&lt;h1&gt;404 - Page Not Found&lt;/h1&gt;'</span>);
+    }
+});
+
+<span class="keyword">const</span> PORT = <span class="number">3000</span>;
+server.listen(PORT, () => {
+    console.log(<span class="string">`Server running on http://localhost:${PORT}`</span>);
+    console.log(<span class="string">'Try visiting:'</span>);
+    console.log(<span class="string">'  http://localhost:3000/'</span>);
+    console.log(<span class="string">'  http://localhost:3000/about'</span>);
+    console.log(<span class="string">'  http://localhost:3000/api/data'</span>);
+    console.log(<span class="string">'  http://localhost:3000/random (404)'</span>);
+});</code></pre>
+</div>
+<h3>Serving HTML Files</h3>
+<p>Instead of writing HTML in strings, let us serve actual HTML files:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">index.html</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="keyword">&lt;html&gt;</span>
+<span class="keyword">&lt;head&gt;</span>
+    <span class="keyword">&lt;title&gt;</span>My Node.js Site<span class="keyword">&lt;/title&gt;</span>
+<span class="keyword">&lt;/head&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+    <span class="keyword">&lt;h1&gt;</span>Welcome!<span class="keyword">&lt;/h1&gt;</span>
+    <span class="keyword">&lt;p&gt;</span>This page is served by Node.js<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">server.js - Serving HTML Files</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+<span class="keyword">const</span> fs = require(<span class="string">'fs'</span>);
+<span class="keyword">const</span> path = require(<span class="string">'path'</span>);
+
+<span class="keyword">const</span> server = http.createServer((req, res) => {
+    <span class="keyword">if</span> (req.url === <span class="string">'/'</span>) {
+        <span class="comment">// Build the path to index.html</span>
+        <span class="keyword">const</span> filePath = path.join(__dirname, <span class="string">'index.html'</span>);
+
+        <span class="comment">// Read the file from disk</span>
+        fs.readFile(filePath, (err, content) => {
+            <span class="keyword">if</span> (err) {
+                <span class="comment">// Error reading file</span>
+                res.statusCode = <span class="number">500</span>;
+                res.end(<span class="string">'Server Error'</span>);
+                <span class="keyword">return</span>;
+            }
+
+            <span class="comment">// Successfully read file - send it</span>
+            res.statusCode = <span class="number">200</span>;
+            res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);
+            res.end(content);
+        });
+    } <span class="keyword">else</span> {
+        res.statusCode = <span class="number">404</span>;
+        res.end(<span class="string">'Not Found'</span>);
+    }
+});
+
+server.listen(<span class="number">3000</span>, () => {
+    console.log(<span class="string">'Server running on http://localhost:3000'</span>);
+});</code></pre>
+</div>
+<h3>NPM - Node Package Manager</h3>
+<p>NPM lets you install and manage third-party packages. Let us set up a proper project:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Terminal - Project Setup</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Create a new folder and navigate into it</span>
+mkdir my-server
+cd my-server
+
+<span class="comment"># Initialize a new npm project</span>
+<span class="comment"># -y accepts all defaults</span>
+npm init -y
+
+<span class="comment"># This creates package.json - your project's config file</span></code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">package.json</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code>{
+  <span class="string">"name"</span>: <span class="string">"my-server"</span>,
+  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,
+  <span class="string">"description"</span>: <span class="string">"My first Node.js server"</span>,
+  <span class="string">"main"</span>: <span class="string">"server.js"</span>,
+  <span class="string">"scripts"</span>: {
+    <span class="string">"start"</span>: <span class="string">"node server.js"</span>,
+    <span class="string">"dev"</span>: <span class="string">"node --watch server.js"</span>  <span class="comment">// Auto-restart on changes</span>
+  },
+  <span class="string">"keywords"</span>: [],
+  <span class="string">"author"</span>: <span class="string">""</span>,
+  <span class="string">"license"</span>: <span class="string">"ISC"</span>
+}</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Running Your Server</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Run using npm scripts</span>
+npm start       <span class="comment"># Runs: node server.js</span>
+npm run dev     <span class="comment"># Runs with auto-restart on file changes</span></code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=TlB_eWDSMt4" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">Node.js Tutorial for Beginners</div><div class="video-channel">Programming with Mosh</div></div>
+</a>
+<a href="https://www.youtube.com/watch?v=fBNz5xF-Kx4" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">Node.js Crash Course</div><div class="video-channel">Traversy Media</div></div>
+</a>
+</div>
+<div class="project-box">
+<span class="project-label">Mini Project</span>
+<h4>Build a Personal Info Server</h4>
+<p>Create a server with these routes:</p>
+<ul>
+<li><code>GET /</code> - Return an HTML page with your name</li>
+<li><code>GET /about</code> - Return JSON with info about you (name, hobby, etc.)</li>
+<li><code>GET /time</code> - Return the current date and time as JSON</li>
+<li><code>GET /random</code> - Return a random number between 1-100</li>
+<li>Any other URL returns a 404 page</li>
+</ul>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check: Day 2</h4>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">1. What does require() do in Node.js?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Creates a new file</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Imports a module so you can use its code</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Runs a server</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Connects to a database</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> require() is Node.js's way of importing modules. It loads the specified module and returns its exports, allowing you to use functions and objects defined in other files or packages.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> require() is the import statement in Node.js. It loads modules (core, local, or npm packages) and returns their exports so you can use them in your code.</div>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">2. What does res.end() do in an HTTP server?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Stops the server from running</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Deletes the response object</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Sends the response body and signals the response is complete</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Closes the client's browser</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> res.end() signals that the response is complete. It optionally sends data as the response body. Without calling res.end(), the client will wait indefinitely for more data.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> res.end() is crucial - it tells the server you're done building the response. You can optionally pass data to send. Without it, the request hangs forever.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. How do you export a function from a Node.js module?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">module.exports = myFunction</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">export myFunction</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">return myFunction</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">public myFunction</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> In CommonJS (Node.js default), you use module.exports to expose functions, objects, or values from a module. Other files can then require() your module to access what you exported.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Node.js uses CommonJS modules by default. To export, use module.exports = value or module.exports.name = value. The 'export' keyword is ES6 modules (different system).</div>
+</div>
+</div>
+<div class="completion-box">
+<h4>Day 2 Complete!</h4>
+<p>You have built your first Node.js server! You understand modules, the http module, routing, and how to serve different content types. This is the foundation everything else builds upon.</p>
+<p>Tomorrow, we dive deeper into HTTP methods (GET, POST, PUT, DELETE) and learn about JSON - the language APIs speak.</p>
+</div>
+</section>
+<div class="page-nav">
+<a href="day1.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 1: Internet Basics</a>
+<a href="day3.html">Day 3: HTTP Methods & JSON<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</div>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
