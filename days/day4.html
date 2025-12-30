@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 4: Learn Express.js - the most popular Node.js framework for building web servers with routing, middleware, and clean code.">
+<title>Day 4: Express.js Framework | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html" class="active">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html" class="active"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 4</span>
+<h2>Express.js Framework</h2>
+<p>Building servers with raw Node.js works, but it is verbose and repetitive. Express.js simplifies everything - routing, middleware, error handling, and more. It is the most popular Node.js framework for good reason.</p>
+</div>
+<h3>Why Express.js?</h3>
+<p>Compare the raw Node.js approach to Express:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Raw Node.js - Verbose</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+<span class="keyword">const</span> server = http.createServer((req, res) => {
+    <span class="keyword">if</span> (req.method === <span class="string">'GET'</span> && req.url === <span class="string">'/users'</span>) {
+        res.statusCode = <span class="number">200</span>;
+        res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);
+        res.end(JSON.stringify({ users: [] }));
+    }
+});
+server.listen(<span class="number">3000</span>);</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Express.js - Clean and Simple</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> app = express();
+
+app.get(<span class="string">'/users'</span>, (req, res) => {
+    res.json({ users: [] });
+});
+
+app.listen(<span class="number">3000</span>);</code></pre>
+</div>
+<div class="concept-box">
+<h4>Express Benefits</h4>
+<ul>
+<li><strong>Cleaner Routing</strong> - app.get(), app.post() instead of if/else chains</li>
+<li><strong>Built-in JSON</strong> - res.json() automatically stringifies and sets headers</li>
+<li><strong>Middleware</strong> - Easily add functionality like logging, auth, parsing</li>
+<li><strong>Request Parsing</strong> - Easy access to params, query strings, body</li>
+<li><strong>Error Handling</strong> - Centralized error handling</li>
+</ul>
+</div>
+<h3>Getting Started with Express</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Terminal - Project Setup</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Create project folder</span>
+mkdir express-app
+cd express-app
+
+<span class="comment"># Initialize npm project</span>
+npm init -y
+
+<span class="comment"># Install Express</span>
+npm install express
+
+<span class="comment"># Create main file</span>
+touch app.js</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">app.js - Basic Express Server</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Import Express</span>
+<span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+
+<span class="comment">// Create Express application instance</span>
+<span class="keyword">const</span> app = express();
+
+<span class="comment">// Define a route for GET requests to root URL</span>
+app.get(<span class="string">'/'</span>, (req, res) => {
+    res.send(<span class="string">'Hello from Express!'</span>);
+});
+
+<span class="comment">// Start server on port 3000</span>
+<span class="keyword">const</span> PORT = <span class="number">3000</span>;
+app.listen(PORT, () => {
+    console.log(<span class="string">`Server running on http://localhost:${PORT}`</span>);
+});</code></pre>
+</div>
+<h3>Routing in Express</h3>
+<p>Express provides methods for each HTTP verb. The pattern is: <code>app.METHOD(PATH, HANDLER)</code></p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Route Methods</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// GET request to /</span>
+app.get(<span class="string">'/'</span>, (req, res) => {
+    res.send(<span class="string">'Home page'</span>);
+});
+
+<span class="comment">// POST request to /users</span>
+app.post(<span class="string">'/users'</span>, (req, res) => {
+    res.send(<span class="string">'Create user'</span>);
+});
+
+<span class="comment">// PUT request to /users/:id</span>
+app.put(<span class="string">'/users/:id'</span>, (req, res) => {
+    res.send(<span class="string">`Update user ${req.params.id}`</span>);
+});
+
+<span class="comment">// PATCH request to /users/:id</span>
+app.patch(<span class="string">'/users/:id'</span>, (req, res) => {
+    res.send(<span class="string">`Partial update user ${req.params.id}`</span>);
+});
+
+<span class="comment">// DELETE request to /users/:id</span>
+app.delete(<span class="string">'/users/:id'</span>, (req, res) => {
+    res.send(<span class="string">`Delete user ${req.params.id}`</span>);
+});
+
+<span class="comment">// Handle ALL HTTP methods</span>
+app.all(<span class="string">'/secret'</span>, (req, res) => {
+    res.send(<span class="string">'Accessing secret area'</span>);
+});</code></pre>
+</div>
+<h3>Route Parameters</h3>
+<p>Capture dynamic values from URLs using <code>:paramName</code> syntax:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Route Parameters</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Single parameter</span>
+<span class="comment">// URL: /users/123  ->  req.params.id = "123"</span>
+app.get(<span class="string">'/users/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> userId = req.params.id;
+    res.send(<span class="string">`User ID: ${userId}`</span>);
+});
+
+<span class="comment">// Multiple parameters</span>
+<span class="comment">// URL: /users/123/posts/456</span>
+app.get(<span class="string">'/users/:userId/posts/:postId'</span>, (req, res) => {
+    <span class="keyword">const</span> { userId, postId } = req.params;
+    res.json({ userId, postId });
+});
+
+<span class="comment">// Optional parameter (use regex or check for undefined)</span>
+app.get(<span class="string">'/products/:category?'</span>, (req, res) => {
+    <span class="keyword">if</span> (req.params.category) {
+        res.send(<span class="string">`Products in ${req.params.category}`</span>);
+    } <span class="keyword">else</span> {
+        res.send(<span class="string">'All products'</span>);
+    }
+});</code></pre>
+</div>
+<h3>Query Strings</h3>
+<p>Access URL query parameters with <code>req.query</code>:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Query Parameters</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// URL: /search?q=nodejs&limit=10&page=2</span>
+app.get(<span class="string">'/search'</span>, (req, res) => {
+    <span class="keyword">const</span> { q, limit, page } = req.query;
+
+    console.log(q);      <span class="comment">// "nodejs"</span>
+    console.log(limit);  <span class="comment">// "10" (always strings!)</span>
+    console.log(page);   <span class="comment">// "2"</span>
+
+    <span class="comment">// Convert to numbers if needed</span>
+    <span class="keyword">const</span> limitNum = parseInt(limit) || <span class="number">10</span>;
+    <span class="keyword">const</span> pageNum = parseInt(page) || <span class="number">1</span>;
+
+    res.json({
+        query: q,
+        limit: limitNum,
+        page: pageNum
+    });
+});</code></pre>
+</div>
+<h3>Response Methods</h3>
+<p>Express provides many ways to send responses:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Response Methods</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Send plain text</span>
+res.send(<span class="string">'Hello World'</span>);
+
+<span class="comment">// Send JSON (automatically sets Content-Type)</span>
+res.json({ message: <span class="string">'Success'</span>, data: users });
+
+<span class="comment">// Send with specific status code</span>
+res.status(<span class="number">201</span>).json({ id: <span class="number">1</span>, name: <span class="string">'Created'</span> });
+res.status(<span class="number">404</span>).json({ error: <span class="string">'Not found'</span> });
+res.status(<span class="number">500</span>).json({ error: <span class="string">'Server error'</span> });
+
+<span class="comment">// Send file</span>
+res.sendFile(<span class="string">'/path/to/file.html'</span>);
+
+<span class="comment">// Download file</span>
+res.download(<span class="string">'/path/to/file.pdf'</span>);
+
+<span class="comment">// Redirect to another URL</span>
+res.redirect(<span class="string">'/new-url'</span>);
+res.redirect(<span class="number">301</span>, <span class="string">'/permanent-new-url'</span>);
+
+<span class="comment">// End response with no body</span>
+res.status(<span class="number">204</span>).end();
+
+<span class="comment">// Set headers</span>
+res.set(<span class="string">'X-Custom-Header'</span>, <span class="string">'value'</span>);
+res.set({
+    <span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>,
+    <span class="string">'X-Another'</span>: <span class="string">'header'</span>
+});</code></pre>
+</div>
+<h3>Middleware - The Heart of Express</h3>
+<p><strong>Middleware</strong> functions have access to the request, response, and the next middleware function. They can execute code, modify req/res, end the request, or call next().</p>
+<div class="diagram">
+<pre>
+┌─────────┐     ┌──────────────┐     ┌──────────────┐     ┌───────────────┐     ┌──────────┐
+│ Request │────►│ Middleware 1 │────►│ Middleware 2 │────►│ Route Handler │────►│ Response │
+└─────────┘     └──────┬───────┘     └──────┬───────┘     └───────┬───────┘     └──────────┘
+                       │                    │                     │
+                    next()               next()              res.send()
+</pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Middleware Examples</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> app = express();
+
+<span class="comment">// Custom logging middleware (runs on EVERY request)</span>
+app.use((req, res, next) => {
+    console.log(<span class="string">`${<span class="keyword">new</span> Date().toISOString()} ${req.method} ${req.url}`</span>);
+    next();  <span class="comment">// MUST call next() to continue to next middleware</span>
+});
+
+<span class="comment">// Built-in middleware: Parse JSON bodies</span>
+app.use(express.json());
+
+<span class="comment">// Built-in middleware: Parse URL-encoded bodies (forms)</span>
+app.use(express.urlencoded({ extended: <span class="keyword">true</span> }));
+
+<span class="comment">// Built-in middleware: Serve static files</span>
+app.use(express.static(<span class="string">'public'</span>));
+
+<span class="comment">// Middleware for specific path only</span>
+app.use(<span class="string">'/api'</span>, (req, res, next) => {
+    console.log(<span class="string">'API request received'</span>);
+    next();
+});
+
+<span class="comment">// Your routes come AFTER middleware</span>
+app.get(<span class="string">'/'</span>, (req, res) => {
+    res.send(<span class="string">'Home'</span>);
+});
+
+app.listen(<span class="number">3000</span>);</code></pre>
+</div>
+<div class="important">
+<div class="important-label">Critical Point</div>
+<p>Order matters! Middleware runs in the order it is defined. Always put <code>express.json()</code> BEFORE your routes, or <code>req.body</code> will be undefined. Forgetting to call <code>next()</code> will hang the request.</p>
+</div>
+<h3>Complete Express CRUD API</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">app.js - Full CRUD API</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> app = express();
+
+<span class="comment">// Middleware</span>
+app.use(express.json());
+
+<span class="comment">// In-memory database</span>
+<span class="keyword">let</span> books = [
+    { id: <span class="number">1</span>, title: <span class="string">'Node.js Basics'</span>, author: <span class="string">'John Doe'</span> },
+    { id: <span class="number">2</span>, title: <span class="string">'Express Guide'</span>, author: <span class="string">'Jane Smith'</span> }
+];
+<span class="keyword">let</span> nextId = <span class="number">3</span>;
+
+<span class="comment">// GET all books</span>
+app.get(<span class="string">'/api/books'</span>, (req, res) => {
+    res.json(books);
+});
+
+<span class="comment">// GET single book</span>
+app.get(<span class="string">'/api/books/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> book = books.find(b => b.id === parseInt(req.params.id));
+
+    <span class="keyword">if</span> (!book) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Book not found'</span> });
+    }
+
+    res.json(book);
+});
+
+<span class="comment">// POST create book</span>
+app.post(<span class="string">'/api/books'</span>, (req, res) => {
+    <span class="keyword">const</span> { title, author } = req.body;
+
+    <span class="comment">// Validation</span>
+    <span class="keyword">if</span> (!title || !author) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({
+            error: <span class="string">'Title and author are required'</span>
+        });
+    }
+
+    <span class="keyword">const</span> newBook = {
+        id: nextId++,
+        title,
+        author
+    };
+
+    books.push(newBook);
+    res.status(<span class="number">201</span>).json(newBook);
+});
+
+<span class="comment">// PUT update book (replace)</span>
+app.put(<span class="string">'/api/books/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> id = parseInt(req.params.id);
+    <span class="keyword">const</span> index = books.findIndex(b => b.id === id);
+
+    <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Book not found'</span> });
+    }
+
+    <span class="keyword">const</span> { title, author } = req.body;
+
+    <span class="keyword">if</span> (!title || !author) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({
+            error: <span class="string">'Title and author are required'</span>
+        });
+    }
+
+    books[index] = { id, title, author };
+    res.json(books[index]);
+});
+
+<span class="comment">// PATCH update book (partial)</span>
+app.patch(<span class="string">'/api/books/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> id = parseInt(req.params.id);
+    <span class="keyword">const</span> book = books.find(b => b.id === id);
+
+    <span class="keyword">if</span> (!book) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Book not found'</span> });
+    }
+
+    <span class="comment">// Update only provided fields</span>
+    <span class="keyword">if</span> (req.body.title) book.title = req.body.title;
+    <span class="keyword">if</span> (req.body.author) book.author = req.body.author;
+
+    res.json(book);
+});
+
+<span class="comment">// DELETE book</span>
+app.delete(<span class="string">'/api/books/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> id = parseInt(req.params.id);
+    <span class="keyword">const</span> index = books.findIndex(b => b.id === id);
+
+    <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'Book not found'</span> });
+    }
+
+    books.splice(index, <span class="number">1</span>);
+    res.status(<span class="number">204</span>).end();
+});
+
+<span class="comment">// 404 handler for unmatched routes</span>
+app.use((req, res) => {
+    res.status(<span class="number">404</span>).json({ error: <span class="string">'Route not found'</span> });
+});
+
+<span class="comment">// Start server</span>
+<span class="keyword">const</span> PORT = process.env.PORT || <span class="number">3000</span>;
+app.listen(PORT, () => {
+    console.log(<span class="string">`Server running on http://localhost:${PORT}`</span>);
+});</code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=SccSCuHhOw0" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">Express.js Full Course</div><div class="video-channel">Web Dev Simplified</div></div>
+</a>
+<a href="https://www.youtube.com/watch?v=L72fhGm1tfE" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">Express Crash Course</div><div class="video-channel">Traversy Media</div></div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check: Day 4</h4>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">1. What does app.use(express.json()) do?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Sends JSON responses</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Validates JSON format</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Parses JSON request bodies into req.body</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Converts responses to JSON</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> express.json() is middleware that parses incoming JSON request bodies and makes the data available on req.body. Without it, req.body would be undefined.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> express.json() is middleware that parses JSON in incoming request bodies. It populates req.body with the parsed data. You must add it BEFORE your routes.</div>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">2. How do you access a URL parameter like /users/123?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">req.query.id</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">req.params.id</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">req.body.id</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">req.url.id</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Route parameters (like :id in the path) are accessed via req.params. The route would be defined as '/users/:id' and req.params.id would equal "123".</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> req.params contains route parameters (path segments with :). req.query has query strings (?key=value). req.body has POST/PUT data. For /users/:id, use req.params.id.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. What happens if you forget to call next() in middleware?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">The request hangs and never completes</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Express automatically continues</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">An error is thrown</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">The middleware runs twice</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> If middleware does not call next() or send a response, the request will hang indefinitely. The client will eventually timeout. Always call next() unless you're ending the request-response cycle.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Middleware must either call next() to pass control to the next function, or send a response to end the cycle. Doing neither causes the request to hang forever.</div>
+</div>
+</div>
+<div class="project-box">
+<span class="project-label">Mini Project</span>
+<h4>Task Manager API</h4>
+<p>Build an Express API for managing tasks:</p>
+<ul>
+<li><code>GET /api/tasks</code> - List all tasks (support ?completed=true filter)</li>
+<li><code>GET /api/tasks/:id</code> - Get single task</li>
+<li><code>POST /api/tasks</code> - Create task (title required, completed defaults false)</li>
+<li><code>PATCH /api/tasks/:id</code> - Update task (toggle completed, change title)</li>
+<li><code>DELETE /api/tasks/:id</code> - Delete task</li>
+<li>Add request logging middleware</li>
+</ul>
+</div>
+<div class="completion-box">
+<h4>Day 4 Complete!</h4>
+<p>You have learned Express.js - the most popular Node.js framework. You understand routing, middleware, request/response handling, and how to build a complete CRUD API with much cleaner code than raw Node.js.</p>
+<p>Tomorrow, we will organize our code better by learning about project structure, routers, and controllers - essential patterns for building maintainable APIs.</p>
+</div>
+</section>
+<div class="page-nav">
+<a href="day3.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 3: HTTP & JSON</a>
+<a href="day5.html">Day 5: REST APIs<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</div>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
