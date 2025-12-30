@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 10: Master JWT authentication - Generate tokens, protect routes, and implement refresh token patterns.">
+<title>Day 10: JWT Implementation | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html" class="active">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html" class="active"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 10</span>
+<h2>JWT Implementation</h2>
+<p>JSON Web Tokens enable stateless authentication - the server doesn't need to store session data. Today you learn to generate, verify, and use JWTs to protect your API routes.</p>
+</div>
+<h3>Understanding JWT</h3>
+<p>A JWT is a compact, URL-safe token containing claims (data) that can be verified and trusted because it is digitally signed.</p>
+<div class="diagram">
+<pre>
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+|_______________________________|______________________________________________________________________|__________________________________|
+           HEADER                                              PAYLOAD                                              SIGNATURE
+</pre>
+</div>
+<div class="concept-box">
+<h4>JWT Structure</h4>
+<ul>
+<li><strong>Header</strong> - Algorithm (HS256) and token type (JWT)</li>
+<li><strong>Payload</strong> - Claims (user data, expiration, issued at)</li>
+<li><strong>Signature</strong> - Verifies the token hasn't been tampered with</li>
+</ul>
+</div>
+<div class="important">
+<div class="important-label">Security Warning</div>
+<p>JWT payload is only Base64 encoded, NOT encrypted. Anyone can decode and read it. Never put sensitive data like passwords in the payload.</p>
+</div>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Terminal</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code>npm install jsonwebtoken</code></pre>
+</div>
+<h3>Generating Tokens</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Basic JWT Usage</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> jwt = <span class="function">require</span>(<span class="string">'jsonwebtoken'</span>);
+
+<span class="comment">// Secret key - in production, use environment variable</span>
+<span class="comment">// Must be long, random, and kept secure</span>
+<span class="keyword">const</span> JWT_SECRET = <span class="string">'your-super-secret-key-min-32-chars'</span>;
+
+<span class="comment">// Generate a token</span>
+<span class="keyword">function</span> <span class="function">generateToken</span>(user) {
+  <span class="comment">// Payload - data to encode in the token</span>
+  <span class="keyword">const</span> payload = {
+    id: user._id,        <span class="comment">// User's database ID</span>
+    email: user.email,   <span class="comment">// User's email</span>
+    role: user.role      <span class="comment">// User's role (optional)</span>
+  };
+
+  <span class="comment">// Sign the token with secret and options</span>
+  <span class="keyword">const</span> token = jwt.<span class="function">sign</span>(payload, JWT_SECRET, {
+    expiresIn: <span class="string">'1h'</span>      <span class="comment">// Token expires in 1 hour</span>
+  });
+
+  <span class="keyword">return</span> token;
+}
+
+<span class="comment">// Verify a token</span>
+<span class="keyword">function</span> <span class="function">verifyToken</span>(token) {
+  <span class="keyword">try</span> {
+    <span class="comment">// Returns the decoded payload if valid</span>
+    <span class="keyword">const</span> decoded = jwt.<span class="function">verify</span>(token, JWT_SECRET);
+    <span class="keyword">return</span> decoded;
+  } <span class="keyword">catch</span> (err) {
+    <span class="comment">// Token is invalid or expired</span>
+    <span class="keyword">return</span> <span class="keyword">null</span>;
+  }
+}</code></pre>
+</div>
+<h3>Authentication Middleware</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">middleware/auth.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> jwt = <span class="function">require</span>(<span class="string">'jsonwebtoken'</span>);
+
+<span class="keyword">const</span> JWT_SECRET = process.env.JWT_SECRET || <span class="string">'your-secret-key'</span>;
+
+<span class="comment">// Middleware to protect routes</span>
+<span class="keyword">function</span> <span class="function">authenticate</span>(req, res, next) {
+  <span class="comment">// Get token from Authorization header</span>
+  <span class="comment">// Format: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+  <span class="keyword">const</span> authHeader = req.headers.authorization;
+
+  <span class="comment">// Check if header exists and has correct format</span>
+  <span class="keyword">if</span> (!authHeader || !authHeader.<span class="function">startsWith</span>(<span class="string">'Bearer '</span>)) {
+    <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({
+      error: <span class="string">'Access denied. No token provided.'</span>
+    });
+  }
+
+  <span class="comment">// Extract token (remove "Bearer " prefix)</span>
+  <span class="keyword">const</span> token = authHeader.<span class="function">split</span>(<span class="string">' '</span>)[<span class="number">1</span>];
+
+  <span class="keyword">try</span> {
+    <span class="comment">// Verify token and decode payload</span>
+    <span class="keyword">const</span> decoded = jwt.<span class="function">verify</span>(token, JWT_SECRET);
+
+    <span class="comment">// Attach user data to request object</span>
+    <span class="comment">// Now available in route handlers as req.user</span>
+    req.user = decoded;
+
+    <span class="comment">// Continue to the next middleware/route handler</span>
+    <span class="function">next</span>();
+  } <span class="keyword">catch</span> (err) {
+    <span class="comment">// Handle different JWT errors</span>
+    <span class="keyword">if</span> (err.name === <span class="string">'TokenExpiredError'</span>) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Token expired'</span> });
+    }
+    <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Invalid token'</span> });
+  }
+}
+
+<span class="comment">// Role-based access control middleware</span>
+<span class="keyword">function</span> <span class="function">authorize</span>(...allowedRoles) {
+  <span class="keyword">return</span> (req, res, next) => {
+    <span class="comment">// Check if user's role is in the allowed list</span>
+    <span class="keyword">if</span> (!allowedRoles.<span class="function">includes</span>(req.user.role)) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">403</span>).<span class="function">json</span>({
+        error: <span class="string">'Access denied. Insufficient permissions.'</span>
+      });
+    }
+    <span class="function">next</span>();
+  };
+}
+
+module.exports = { authenticate, authorize };</code></pre>
+</div>
+<h3>Complete JWT Authentication System</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">server.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+<span class="keyword">const</span> bcrypt = <span class="function">require</span>(<span class="string">'bcrypt'</span>);
+<span class="keyword">const</span> jwt = <span class="function">require</span>(<span class="string">'jsonwebtoken'</span>);
+
+<span class="keyword">const</span> app = <span class="function">express</span>();
+app.<span class="function">use</span>(express.<span class="function">json</span>());
+
+<span class="comment">// Configuration - use environment variables in production</span>
+<span class="keyword">const</span> JWT_SECRET = <span class="string">'your-super-secret-key-change-in-production'</span>;
+<span class="keyword">const</span> JWT_EXPIRES_IN = <span class="string">'1h'</span>;
+
+<span class="comment">// Connect to MongoDB</span>
+mongoose.<span class="function">connect</span>(<span class="string">'mongodb://localhost:27017/jwtapp'</span>);
+
+<span class="comment">// User Schema</span>
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  email: { type: String, required: <span class="keyword">true</span>, unique: <span class="keyword">true</span>, lowercase: <span class="keyword">true</span> },
+  password: { type: String, required: <span class="keyword">true</span>, select: <span class="keyword">false</span> },
+  name: { type: String, required: <span class="keyword">true</span> },
+  role: { type: String, enum: [<span class="string">'user'</span>, <span class="string">'admin'</span>], default: <span class="string">'user'</span> }
+});
+
+<span class="comment">// Hash password before saving</span>
+userSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">async function</span>(next) {
+  <span class="keyword">if</span> (!<span class="keyword">this</span>.<span class="function">isModified</span>(<span class="string">'password'</span>)) <span class="keyword">return</span> <span class="function">next</span>();
+  <span class="keyword">this</span>.password = <span class="keyword">await</span> bcrypt.<span class="function">hash</span>(<span class="keyword">this</span>.password, <span class="number">10</span>);
+  <span class="function">next</span>();
+});
+
+<span class="comment">// Password comparison method</span>
+userSchema.methods.comparePassword = <span class="keyword">function</span>(candidatePassword) {
+  <span class="keyword">return</span> bcrypt.<span class="function">compare</span>(candidatePassword, <span class="keyword">this</span>.password);
+};
+
+<span class="keyword">const</span> User = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);
+
+<span class="comment">// Generate JWT token</span>
+<span class="keyword">function</span> <span class="function">generateToken</span>(user) {
+  <span class="keyword">return</span> jwt.<span class="function">sign</span>(
+    { id: user._id, email: user.email, role: user.role },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
+  );
+}
+
+<span class="comment">// Authentication middleware</span>
+<span class="keyword">function</span> <span class="function">authenticate</span>(req, res, next) {
+  <span class="keyword">const</span> authHeader = req.headers.authorization;
+  <span class="keyword">if</span> (!authHeader || !authHeader.<span class="function">startsWith</span>(<span class="string">'Bearer '</span>)) {
+    <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'No token provided'</span> });
+  }
+  <span class="keyword">const</span> token = authHeader.<span class="function">split</span>(<span class="string">' '</span>)[<span class="number">1</span>];
+  <span class="keyword">try</span> {
+    req.user = jwt.<span class="function">verify</span>(token, JWT_SECRET);
+    <span class="function">next</span>();
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Invalid token'</span> });
+  }
+}
+
+<span class="comment">// Admin-only middleware</span>
+<span class="keyword">function</span> <span class="function">adminOnly</span>(req, res, next) {
+  <span class="keyword">if</span> (req.user.role !== <span class="string">'admin'</span>) {
+    <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">403</span>).<span class="function">json</span>({ error: <span class="string">'Admin access required'</span> });
+  }
+  <span class="function">next</span>();
+}
+
+<span class="comment">// ROUTES</span>
+
+<span class="comment">// Register new user</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/register'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> { email, password, name } = req.body;
+    <span class="keyword">const</span> exists = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email });
+    <span class="keyword">if</span> (exists) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: <span class="string">'Email already registered'</span> });
+    }
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">create</span>({ email, password, name });
+    <span class="keyword">const</span> token = <span class="function">generateToken</span>(user);
+    res.<span class="function">status</span>(<span class="number">201</span>).<span class="function">json</span>({ token, user: { id: user._id, email: user.email, name: user.name } });
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// Login user</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/login'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> { email, password } = req.body;
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email }).<span class="function">select</span>(<span class="string">'+password'</span>);
+    <span class="keyword">if</span> (!user || !(<span class="keyword">await</span> user.<span class="function">comparePassword</span>(password))) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Invalid credentials'</span> });
+    }
+    <span class="keyword">const</span> token = <span class="function">generateToken</span>(user);
+    res.<span class="function">json</span>({ token, user: { id: user._id, email: user.email, name: user.name } });
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: <span class="string">'Login failed'</span> });
+  }
+});
+
+<span class="comment">// Protected route - get current user profile</span>
+app.<span class="function">get</span>(<span class="string">'/api/profile'</span>, authenticate, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findById</span>(req.user.id);
+  res.<span class="function">json</span>({ user: { id: user._id, email: user.email, name: user.name, role: user.role } });
+});
+
+<span class="comment">// Admin-only route - get all users</span>
+app.<span class="function">get</span>(<span class="string">'/api/admin/users'</span>, authenticate, adminOnly, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">const</span> users = <span class="keyword">await</span> User.<span class="function">find</span>().<span class="function">select</span>(<span class="string">'-__v'</span>);
+  res.<span class="function">json</span>({ users });
+});
+
+app.<span class="function">listen</span>(<span class="number">3000</span>, () => console.<span class="function">log</span>(<span class="string">'Server running on port 3000'</span>));</code></pre>
+</div>
+<h3>Refresh Token Pattern</h3>
+<p>Access tokens should be short-lived for security. Refresh tokens allow getting new access tokens without re-login:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Refresh Token Implementation</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> ACCESS_TOKEN_EXPIRES = <span class="string">'15m'</span>;   <span class="comment">// Short-lived access token</span>
+<span class="keyword">const</span> REFRESH_TOKEN_EXPIRES = <span class="string">'7d'</span>;  <span class="comment">// Long-lived refresh token</span>
+<span class="keyword">const</span> REFRESH_SECRET = <span class="string">'different-secret-for-refresh'</span>;
+
+<span class="comment">// Generate both tokens</span>
+<span class="keyword">function</span> <span class="function">generateTokens</span>(user) {
+  <span class="comment">// Access token - short expiry, used for API requests</span>
+  <span class="keyword">const</span> accessToken = jwt.<span class="function">sign</span>(
+    { id: user._id, email: user.email, role: user.role },
+    JWT_SECRET,
+    { expiresIn: ACCESS_TOKEN_EXPIRES }
+  );
+
+  <span class="comment">// Refresh token - long expiry, only used to get new access tokens</span>
+  <span class="keyword">const</span> refreshToken = jwt.<span class="function">sign</span>(
+    { id: user._id },
+    REFRESH_SECRET,
+    { expiresIn: REFRESH_TOKEN_EXPIRES }
+  );
+
+  <span class="keyword">return</span> { accessToken, refreshToken };
+}
+
+<span class="comment">// Login endpoint - returns both tokens</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/login'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="comment">// ... validation logic ...</span>
+  <span class="keyword">const</span> { accessToken, refreshToken } = <span class="function">generateTokens</span>(user);
+
+  <span class="comment">// Set refresh token as HTTP-only cookie (more secure)</span>
+  res.<span class="function">cookie</span>(<span class="string">'refreshToken'</span>, refreshToken, {
+    httpOnly: <span class="keyword">true</span>,        <span class="comment">// Not accessible via JavaScript</span>
+    secure: <span class="keyword">true</span>,          <span class="comment">// Only sent over HTTPS</span>
+    sameSite: <span class="string">'strict'</span>,   <span class="comment">// CSRF protection</span>
+    maxAge: <span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>  <span class="comment">// 7 days in ms</span>
+  });
+
+  res.<span class="function">json</span>({ accessToken, user: { id: user._id, email: user.email } });
+});
+
+<span class="comment">// Refresh endpoint - get new access token</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/refresh'</span>, (req, res) => {
+  <span class="comment">// Get refresh token from cookie</span>
+  <span class="keyword">const</span> refreshToken = req.cookies.refreshToken;
+
+  <span class="keyword">if</span> (!refreshToken) {
+    <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Refresh token required'</span> });
+  }
+
+  <span class="keyword">try</span> {
+    <span class="comment">// Verify refresh token</span>
+    <span class="keyword">const</span> decoded = jwt.<span class="function">verify</span>(refreshToken, REFRESH_SECRET);
+
+    <span class="comment">// Generate new access token</span>
+    <span class="keyword">const</span> accessToken = jwt.<span class="function">sign</span>(
+      { id: decoded.id },
+      JWT_SECRET,
+      { expiresIn: ACCESS_TOKEN_EXPIRES }
+    );
+
+    res.<span class="function">json</span>({ accessToken });
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">401</span>).<span class="function">json</span>({ error: <span class="string">'Invalid refresh token'</span> });
+  }
+});
+
+<span class="comment">// Logout - clear refresh token</span>
+app.<span class="function">post</span>(<span class="string">'/api/auth/logout'</span>, (req, res) => {
+  res.<span class="function">clearCookie</span>(<span class="string">'refreshToken'</span>);
+  res.<span class="function">json</span>({ message: <span class="string">'Logged out successfully'</span> });
+});</code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=mbsmsi7l3r4" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">JWT Authentication Tutorial - Node.js</div>
+<div class="video-channel">Web Dev Simplified</div>
+</div>
+</a>
+<a href="https://www.youtube.com/watch?v=7Q17ubqLfaM" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">What is JWT and Why Should You Use JWT</div>
+<div class="video-channel">Fireship</div>
+</div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check</h4>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">1. What is the purpose of the JWT signature?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">To encrypt the payload data</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">To verify the token hasn't been tampered with</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">To store additional user data</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">To compress the token size</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> The signature is created by hashing the header + payload with the secret key. If anyone modifies the payload, the signature won't match when verified.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> The signature verifies integrity - it proves the token wasn't modified after creation. The payload is only Base64 encoded, NOT encrypted.</div>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">2. Where should access tokens be sent in API requests?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">In the request body</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">As a URL query parameter</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">In the Authorization header as "Bearer [token]"</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">In a cookie named "token"</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> The standard practice is to send JWTs in the Authorization header using the Bearer scheme: "Authorization: Bearer eyJhbG..."</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Best practice is the Authorization header with Bearer scheme. Query parameters expose tokens in logs/history, and cookies have different use cases (like refresh tokens).</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. Why should access tokens have short expiration times?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">To limit damage if a token is stolen</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">To reduce server memory usage</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">To make tokens smaller</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">To improve encryption strength</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Short-lived tokens (15min-1hr) limit the window of opportunity if stolen. Use refresh tokens (stored securely) to get new access tokens without re-login.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Short expiration times limit attack windows - a stolen token is only useful for a short period. Refresh tokens (7+ days) allow getting new access tokens securely.</div>
+</div>
+</div>
+<div class="completion-box">
+<h4>Congratulations on completing Days 6-10!</h4>
+<p>You've learned MongoDB, Mongoose, data modeling, authentication with bcrypt, and JWT implementation. You now have the skills to build secure, database-backed APIs. Continue to Days 11-15 to learn error handling, file uploads, testing, and deployment!</p>
+</div>
+</section>
+<nav class="page-nav">
+<a href="day9.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 9: Authentication</a>
+<a href="../index.html" class="disabled">Coming Soon<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</nav>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
