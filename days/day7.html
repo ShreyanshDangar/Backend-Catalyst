@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 7: Master Mongoose ODM - Connect MongoDB to Express with schemas, models, and powerful queries.">
+<title>Day 7: Mongoose ODM | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html" class="active">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html" class="active"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 7</span>
+<h2>Mongoose ODM</h2>
+<p>While the native MongoDB driver works, Mongoose provides an elegant abstraction layer with schemas, validation, and powerful query methods that make database operations intuitive and safe.</p>
+</div>
+<h3>Why Mongoose Over Native Driver</h3>
+<p>The native MongoDB driver gives you raw power but no guardrails. Mongoose adds:</p>
+<ul>
+<li><strong>Schema Definition</strong> - Define exactly what fields your documents should have</li>
+<li><strong>Type Casting</strong> - Automatically convert "25" to number 25</li>
+<li><strong>Validation</strong> - Ensure required fields exist, emails are valid, etc.</li>
+<li><strong>Middleware</strong> - Run code before/after save, delete, etc.</li>
+<li><strong>Query Building</strong> - Chain methods like .find().sort().limit()</li>
+</ul>
+<div class="analogy">
+<div class="analogy-label">Real World Analogy</div>
+<p>MongoDB driver is like having raw access to a warehouse - you can put anything anywhere. Mongoose is like having organized shelving with labeled bins - everything has its place, and you get alerts if something doesn't fit.</p>
+</div>
+<h3>Installing and Connecting</h3>
+<p>First, install Mongoose in your project:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Terminal</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code>npm install mongoose</code></pre>
+</div>
+<p>Now connect to MongoDB using Mongoose:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">db.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// Import mongoose library</span>
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="comment">// Connection string - replace with your MongoDB URI</span>
+<span class="keyword">const</span> MONGODB_URI = <span class="string">'mongodb://localhost:27017/myapp'</span>;
+
+<span class="comment">// Connect to MongoDB with recommended options</span>
+mongoose.<span class="function">connect</span>(MONGODB_URI)
+  .<span class="function">then</span>(() => {
+    <span class="comment">// Connection successful</span>
+    console.<span class="function">log</span>(<span class="string">'Connected to MongoDB via Mongoose'</span>);
+  })
+  .<span class="function">catch</span>((err) => {
+    <span class="comment">// Connection failed - log error and exit</span>
+    console.<span class="function">error</span>(<span class="string">'MongoDB connection error:'</span>, err);
+    process.<span class="function">exit</span>(<span class="number">1</span>);
+  });
+
+<span class="comment">// Export the connection for use in other files</span>
+module.exports = mongoose;</code></pre>
+</div>
+<h3>Understanding Schemas</h3>
+<p>A Schema defines the structure of documents in a collection. Think of it as a blueprint for your data:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">models/User.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="comment">// Define the schema - what fields a user document can have</span>
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  <span class="comment">// username: required string, must be unique, 3-30 chars</span>
+  username: {
+    type: String,
+    required: [<span class="keyword">true</span>, <span class="string">'Username is required'</span>],
+    unique: <span class="keyword">true</span>,
+    minlength: [<span class="number">3</span>, <span class="string">'Username must be at least 3 characters'</span>],
+    maxlength: [<span class="number">30</span>, <span class="string">'Username cannot exceed 30 characters'</span>],
+    trim: <span class="keyword">true</span>
+  },
+  <span class="comment">// email: required string, must be unique, validated format</span>
+  email: {
+    type: String,
+    required: [<span class="keyword">true</span>, <span class="string">'Email is required'</span>],
+    unique: <span class="keyword">true</span>,
+    lowercase: <span class="keyword">true</span>,
+    match: [<span class="string">/^\S+@\S+\.\S+$/</span>, <span class="string">'Please enter a valid email'</span>]
+  },
+  <span class="comment">// age: optional number, must be between 13 and 120</span>
+  age: {
+    type: Number,
+    min: [<span class="number">13</span>, <span class="string">'Must be at least 13 years old'</span>],
+    max: [<span class="number">120</span>, <span class="string">'Age seems invalid'</span>]
+  },
+  <span class="comment">// role: string with predefined allowed values (enum)</span>
+  role: {
+    type: String,
+    enum: [<span class="string">'user'</span>, <span class="string">'admin'</span>, <span class="string">'moderator'</span>],
+    default: <span class="string">'user'</span>
+  },
+  <span class="comment">// isActive: boolean flag, defaults to true</span>
+  isActive: {
+    type: Boolean,
+    default: <span class="keyword">true</span>
+  },
+  <span class="comment">// createdAt: auto-set to current date on creation</span>
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+<span class="comment">// Create model from schema - 'User' becomes 'users' collection</span>
+<span class="keyword">const</span> User = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);
+
+<span class="comment">// Export model to use in routes/controllers</span>
+module.exports = User;</code></pre>
+</div>
+<div class="concept-box">
+<h4>Schema Type Options</h4>
+<p>Common schema types and their options:</p>
+<ul>
+<li><strong>String</strong> - trim, lowercase, uppercase, minlength, maxlength, match (regex)</li>
+<li><strong>Number</strong> - min, max</li>
+<li><strong>Date</strong> - min, max</li>
+<li><strong>Boolean</strong> - no special options</li>
+<li><strong>Array</strong> - [String], [Number], or [{nested schema}]</li>
+<li><strong>ObjectId</strong> - for references to other documents</li>
+</ul>
+</div>
+<h3>CRUD with Mongoose</h3>
+<h4>Create Documents</h4>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Creating Users</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> User = <span class="function">require</span>(<span class="string">'./models/User'</span>);
+
+<span class="comment">// Method 1: Create instance then save</span>
+<span class="keyword">const</span> user1 = <span class="keyword">new</span> <span class="function">User</span>({
+  username: <span class="string">'johndoe'</span>,
+  email: <span class="string">'john@example.com'</span>,
+  age: <span class="number">25</span>
+});
+
+<span class="comment">// save() returns a promise - await or use .then()</span>
+<span class="keyword">await</span> user1.<span class="function">save</span>();
+console.<span class="function">log</span>(<span class="string">'User saved:'</span>, user1._id);
+
+<span class="comment">// Method 2: Create directly (shorter syntax)</span>
+<span class="keyword">const</span> user2 = <span class="keyword">await</span> User.<span class="function">create</span>({
+  username: <span class="string">'janedoe'</span>,
+  email: <span class="string">'jane@example.com'</span>,
+  age: <span class="number">28</span>,
+  role: <span class="string">'admin'</span>
+});
+
+<span class="comment">// Method 3: Create multiple at once</span>
+<span class="keyword">const</span> users = <span class="keyword">await</span> User.<span class="function">insertMany</span>([
+  { username: <span class="string">'user1'</span>, email: <span class="string">'u1@test.com'</span> },
+  { username: <span class="string">'user2'</span>, email: <span class="string">'u2@test.com'</span> },
+  { username: <span class="string">'user3'</span>, email: <span class="string">'u3@test.com'</span> }
+]);</code></pre>
+</div>
+<h4>Read Documents</h4>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Query Methods</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// Find all users - returns array</span>
+<span class="keyword">const</span> allUsers = <span class="keyword">await</span> User.<span class="function">find</span>();
+
+<span class="comment">// Find with conditions - all active admins</span>
+<span class="keyword">const</span> admins = <span class="keyword">await</span> User.<span class="function">find</span>({ role: <span class="string">'admin'</span>, isActive: <span class="keyword">true</span> });
+
+<span class="comment">// Find one document - returns single doc or null</span>
+<span class="keyword">const</span> john = <span class="keyword">await</span> User.<span class="function">findOne</span>({ username: <span class="string">'johndoe'</span> });
+
+<span class="comment">// Find by ID - most common for single doc</span>
+<span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findById</span>(<span class="string">'507f1f77bcf86cd799439011'</span>);
+
+<span class="comment">// Select specific fields only (projection)</span>
+<span class="keyword">const</span> names = <span class="keyword">await</span> User.<span class="function">find</span>().<span class="function">select</span>(<span class="string">'username email'</span>);
+
+<span class="comment">// Exclude fields with minus sign</span>
+<span class="keyword">const</span> noPasswords = <span class="keyword">await</span> User.<span class="function">find</span>().<span class="function">select</span>(<span class="string">'-password -__v'</span>);
+
+<span class="comment">// Sorting: 1 = ascending, -1 = descending</span>
+<span class="keyword">const</span> newest = <span class="keyword">await</span> User.<span class="function">find</span>().<span class="function">sort</span>({ createdAt: <span class="number">-1</span> });
+
+<span class="comment">// Pagination with skip and limit</span>
+<span class="keyword">const</span> page = <span class="number">2</span>;
+<span class="keyword">const</span> limit = <span class="number">10</span>;
+<span class="keyword">const</span> paginated = <span class="keyword">await</span> User.<span class="function">find</span>()
+  .<span class="function">skip</span>((page - <span class="number">1</span>) * limit)
+  .<span class="function">limit</span>(limit);
+
+<span class="comment">// Count documents matching criteria</span>
+<span class="keyword">const</span> activeCount = <span class="keyword">await</span> User.<span class="function">countDocuments</span>({ isActive: <span class="keyword">true</span> });</code></pre>
+</div>
+<h4>Update Documents</h4>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Update Methods</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// findByIdAndUpdate - returns the document</span>
+<span class="comment">// { new: true } returns updated doc, not original</span>
+<span class="keyword">const</span> updated = <span class="keyword">await</span> User.<span class="function">findByIdAndUpdate</span>(
+  <span class="string">'507f1f77bcf86cd799439011'</span>,
+  { age: <span class="number">26</span>, role: <span class="string">'moderator'</span> },
+  { new: <span class="keyword">true</span>, runValidators: <span class="keyword">true</span> }
+);
+
+<span class="comment">// findOneAndUpdate - find by any field</span>
+<span class="keyword">const</span> promoted = <span class="keyword">await</span> User.<span class="function">findOneAndUpdate</span>(
+  { username: <span class="string">'johndoe'</span> },
+  { role: <span class="string">'admin'</span> },
+  { new: <span class="keyword">true</span> }
+);
+
+<span class="comment">// updateMany - bulk update, returns count</span>
+<span class="keyword">const</span> result = <span class="keyword">await</span> User.<span class="function">updateMany</span>(
+  { isActive: <span class="keyword">false</span> },
+  { $set: { role: <span class="string">'user'</span> } }
+);
+console.<span class="function">log</span>(<span class="string">`Updated ${result.modifiedCount} users`</span>);
+
+<span class="comment">// Using update operators</span>
+<span class="keyword">await</span> User.<span class="function">findByIdAndUpdate</span>(id, {
+  $inc: { loginCount: <span class="number">1</span> },    <span class="comment">// increment by 1</span>
+  $push: { tags: <span class="string">'verified'</span> }, <span class="comment">// add to array</span>
+  $set: { lastLogin: <span class="keyword">new</span> <span class="function">Date</span>() }
+});</code></pre>
+</div>
+<h4>Delete Documents</h4>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Delete Methods</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// Delete by ID - returns deleted document</span>
+<span class="keyword">const</span> deleted = <span class="keyword">await</span> User.<span class="function">findByIdAndDelete</span>(<span class="string">'507f1f77bcf86cd799439011'</span>);
+
+<span class="comment">// Delete first matching document</span>
+<span class="keyword">const</span> removed = <span class="keyword">await</span> User.<span class="function">findOneAndDelete</span>({ username: <span class="string">'johndoe'</span> });
+
+<span class="comment">// Delete many - returns count of deleted</span>
+<span class="keyword">const</span> result = <span class="keyword">await</span> User.<span class="function">deleteMany</span>({ isActive: <span class="keyword">false</span> });
+console.<span class="function">log</span>(<span class="string">`Deleted ${result.deletedCount} inactive users`</span>);</code></pre>
+</div>
+<h3>Query Operators</h3>
+<p>Mongoose supports all MongoDB query operators:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Query Operators</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// Comparison operators</span>
+<span class="keyword">const</span> adults = <span class="keyword">await</span> User.<span class="function">find</span>({ age: { $gte: <span class="number">18</span> } });          <span class="comment">// >= 18</span>
+<span class="keyword">const</span> young = <span class="keyword">await</span> User.<span class="function">find</span>({ age: { $lt: <span class="number">30</span> } });           <span class="comment">// < 30</span>
+<span class="keyword">const</span> range = <span class="keyword">await</span> User.<span class="function">find</span>({ age: { $gte: <span class="number">18</span>, $lte: <span class="number">65</span> } }); <span class="comment">// 18-65</span>
+<span class="keyword">const</span> notUser = <span class="keyword">await</span> User.<span class="function">find</span>({ role: { $ne: <span class="string">'user'</span> } });   <span class="comment">// not equal</span>
+
+<span class="comment">// Array operators</span>
+<span class="keyword">const</span> specific = <span class="keyword">await</span> User.<span class="function">find</span>({
+  role: { $in: [<span class="string">'admin'</span>, <span class="string">'moderator'</span>] }  <span class="comment">// matches any in array</span>
+});
+<span class="keyword">const</span> excluded = <span class="keyword">await</span> User.<span class="function">find</span>({
+  role: { $nin: [<span class="string">'banned'</span>, <span class="string">'suspended'</span>] }  <span class="comment">// not in array</span>
+});
+
+<span class="comment">// Logical operators</span>
+<span class="keyword">const</span> complex = <span class="keyword">await</span> User.<span class="function">find</span>({
+  $or: [
+    { role: <span class="string">'admin'</span> },
+    { age: { $gte: <span class="number">30</span> } }
+  ]
+});
+
+<span class="keyword">const</span> both = <span class="keyword">await</span> User.<span class="function">find</span>({
+  $and: [
+    { isActive: <span class="keyword">true</span> },
+    { age: { $gte: <span class="number">18</span> } }
+  ]
+});
+
+<span class="comment">// Regex for text search</span>
+<span class="keyword">const</span> search = <span class="keyword">await</span> User.<span class="function">find</span>({
+  username: { $regex: <span class="string">'john'</span>, $options: <span class="string">'i'</span> }  <span class="comment">// case-insensitive</span>
+});
+
+<span class="comment">// Check field exists</span>
+<span class="keyword">const</span> hasAge = <span class="keyword">await</span> User.<span class="function">find</span>({ age: { $exists: <span class="keyword">true</span> } });</code></pre>
+</div>
+<h3>Complete Express Integration</h3>
+<div class="code-block">
+<div class="code-header"><span class="code-label">server.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="comment">// Initialize express app</span>
+<span class="keyword">const</span> app = <span class="function">express</span>();
+
+<span class="comment">// Parse JSON request bodies</span>
+app.<span class="function">use</span>(express.<span class="function">json</span>());
+
+<span class="comment">// Connect to MongoDB</span>
+mongoose.<span class="function">connect</span>(<span class="string">'mongodb://localhost:27017/myapp'</span>)
+  .<span class="function">then</span>(() => console.<span class="function">log</span>(<span class="string">'MongoDB connected'</span>))
+  .<span class="function">catch</span>(err => console.<span class="function">error</span>(err));
+
+<span class="comment">// Define User schema inline for simplicity</span>
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  username: { type: String, required: <span class="keyword">true</span>, unique: <span class="keyword">true</span> },
+  email: { type: String, required: <span class="keyword">true</span>, unique: <span class="keyword">true</span> },
+  age: Number,
+  createdAt: { type: Date, default: Date.now }
+});
+<span class="keyword">const</span> User = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);
+
+<span class="comment">// GET all users</span>
+app.<span class="function">get</span>(<span class="string">'/api/users'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="comment">// Fetch all users, exclude __v field</span>
+    <span class="keyword">const</span> users = <span class="keyword">await</span> User.<span class="function">find</span>().<span class="function">select</span>(<span class="string">'-__v'</span>);
+    res.<span class="function">json</span>(users);
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// GET single user by ID</span>
+app.<span class="function">get</span>(<span class="string">'/api/users/:id'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findById</span>(req.params.id);
+    <span class="comment">// Return 404 if user not found</span>
+    <span class="keyword">if</span> (!user) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">404</span>).<span class="function">json</span>({ error: <span class="string">'User not found'</span> });
+    }
+    res.<span class="function">json</span>(user);
+  } <span class="keyword">catch</span> (err) {
+    <span class="comment">// Handle invalid ObjectId format</span>
+    <span class="keyword">if</span> (err.name === <span class="string">'CastError'</span>) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: <span class="string">'Invalid user ID'</span> });
+    }
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// POST create new user</span>
+app.<span class="function">post</span>(<span class="string">'/api/users'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="comment">// Create user from request body</span>
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">create</span>(req.body);
+    <span class="comment">// Return 201 Created status</span>
+    res.<span class="function">status</span>(<span class="number">201</span>).<span class="function">json</span>(user);
+  } <span class="keyword">catch</span> (err) {
+    <span class="comment">// Handle validation errors</span>
+    <span class="keyword">if</span> (err.name === <span class="string">'ValidationError'</span>) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: err.message });
+    }
+    <span class="comment">// Handle duplicate key (unique constraint)</span>
+    <span class="keyword">if</span> (err.code === <span class="number">11000</span>) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: <span class="string">'Username or email already exists'</span> });
+    }
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// PUT update user</span>
+app.<span class="function">put</span>(<span class="string">'/api/users/:id'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="comment">// Update and return new version, run validators</span>
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findByIdAndUpdate</span>(
+      req.params.id,
+      req.body,
+      { new: <span class="keyword">true</span>, runValidators: <span class="keyword">true</span> }
+    );
+    <span class="keyword">if</span> (!user) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">404</span>).<span class="function">json</span>({ error: <span class="string">'User not found'</span> });
+    }
+    res.<span class="function">json</span>(user);
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// DELETE user</span>
+app.<span class="function">delete</span>(<span class="string">'/api/users/:id'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findByIdAndDelete</span>(req.params.id);
+    <span class="keyword">if</span> (!user) {
+      <span class="keyword">return</span> res.<span class="function">status</span>(<span class="number">404</span>).<span class="function">json</span>({ error: <span class="string">'User not found'</span> });
+    }
+    <span class="comment">// Return success message</span>
+    res.<span class="function">json</span>({ message: <span class="string">'User deleted successfully'</span> });
+  } <span class="keyword">catch</span> (err) {
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ error: err.message });
+  }
+});
+
+<span class="comment">// Start server</span>
+<span class="keyword">const</span> PORT = <span class="number">3000</span>;
+app.<span class="function">listen</span>(PORT, () => {
+  console.<span class="function">log</span>(<span class="string">`Server running on port ${PORT}`</span>);
+});</code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=DZBGEVgL2eE" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">Mongoose Crash Course - Beginner Through Advanced</div>
+<div class="video-channel">Web Dev Simplified</div>
+</div>
+</a>
+<a href="https://www.youtube.com/watch?v=4yqu8YF29cU" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">MongoDB and Mongoose Tutorial</div>
+<div class="video-channel">The Net Ninja</div>
+</div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check</h4>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">1. What does the { new: true } option do in findByIdAndUpdate?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">Creates a new document if not found</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">Returns the updated document instead of the original</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">Validates the new data before updating</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">Clears the document before updating</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> By default, findByIdAndUpdate returns the original document before the update. Setting { new: true } returns the modified document instead.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> The { new: true } option tells Mongoose to return the updated document rather than the original. Without it, you get the old values.</div>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">2. Which method would you use to find multiple users where age is between 18 and 30?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">User.find({ age: 18-30 })</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">User.findAll({ age: { min: 18, max: 30 } })</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">User.find({ age: { $gte: 18, $lte: 30 } })</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">User.between({ age: [18, 30] })</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> The $gte (greater than or equal) and $lte (less than or equal) operators are used together to create a range query in MongoDB/Mongoose.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> MongoDB uses $gte and $lte operators for range queries: User.find({ age: { $gte: 18, $lte: 30 } }) finds users aged 18 to 30 inclusive.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. What happens when you try to save a document that violates a unique constraint?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">MongoDB throws an error with code 11000</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">The existing document is automatically updated</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">The new document is saved with a modified value</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">Mongoose silently ignores the duplicate</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> MongoDB throws a duplicate key error with code 11000 when you try to insert a document that violates a unique index. Always handle this error in your code.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Unique constraint violations throw a MongoDB error with code 11000. You should catch this error and return a meaningful message to the user.</div>
+</div>
+</div>
+<div class="project-box">
+<span class="project-label">Practice Project</span>
+<h4>Build a Product API with Mongoose</h4>
+<p>Create a complete REST API for products:</p>
+<ul>
+<li>Define a Product schema with: name (required), price (required, min 0), category (enum), inStock (boolean), createdAt</li>
+<li>Implement all CRUD endpoints</li>
+<li>Add a GET /api/products/search?q=term endpoint with regex search</li>
+<li>Add pagination with /api/products?page=1&limit=10</li>
+<li>Handle all validation and error cases properly</li>
+</ul>
+</div>
+</section>
+<nav class="page-nav">
+<a href="day6.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 6: MongoDB</a>
+<a href="day8.html">Day 8: Data Modeling<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</nav>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
