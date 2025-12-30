@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 5: Learn to build professional REST APIs with proper project structure, routers, controllers, and validation.">
+<title>Day 5: Building REST APIs | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html" class="active">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html" class="active"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 5</span>
+<h2>Building REST APIs</h2>
+<p>Putting all routes in one file works for small projects, but quickly becomes unmanageable. Today you learn professional project structure, REST principles, routers, controllers, and validation.</p>
+</div>
+<h3>What is REST?</h3>
+<p><strong>REST (Representational State Transfer)</strong> is an architectural style for designing APIs. RESTful APIs use HTTP methods on resources (nouns) identified by URLs.</p>
+<div class="concept-box">
+<h4>REST Principles</h4>
+<ul>
+<li><strong>Resources</strong> - Everything is a resource (users, products, orders)</li>
+<li><strong>URLs identify resources</strong> - /users, /users/123, /users/123/posts</li>
+<li><strong>HTTP methods define actions</strong> - GET reads, POST creates, etc.</li>
+<li><strong>Stateless</strong> - Each request contains all info needed</li>
+<li><strong>JSON responses</strong> - Standard format for data exchange</li>
+</ul>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">RESTful URL Patterns</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Good RESTful URLs (use nouns, not verbs)</span>
+GET    /api/users          <span class="comment"># Get all users</span>
+GET    /api/users/123      <span class="comment"># Get user 123</span>
+POST   /api/users          <span class="comment"># Create new user</span>
+PUT    /api/users/123      <span class="comment"># Replace user 123</span>
+PATCH  /api/users/123      <span class="comment"># Update user 123</span>
+DELETE /api/users/123      <span class="comment"># Delete user 123</span>
+
+<span class="comment"># Nested resources</span>
+GET    /api/users/123/posts      <span class="comment"># Posts by user 123</span>
+POST   /api/users/123/posts      <span class="comment"># Create post for user 123</span>
+
+<span class="comment"># BAD URLs (avoid verbs in paths)</span>
+GET    /api/getUsers       <span class="comment"># Wrong - verb in URL</span>
+POST   /api/createUser     <span class="comment"># Wrong - verb in URL</span>
+GET    /api/deleteUser/123 <span class="comment"># Wrong - using GET to delete</span></code></pre>
+</div>
+<h3>Professional Project Structure</h3>
+<p>Real projects separate concerns into different folders and files:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Project Structure</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code>my-api/
+├── node_modules/
+├── src/
+│   ├── routes/           <span class="comment"># Route definitions</span>
+│   │   ├── index.js      <span class="comment"># Combines all routes</span>
+│   │   ├── userRoutes.js
+│   │   └── productRoutes.js
+│   ├── controllers/      <span class="comment"># Request handlers</span>
+│   │   ├── userController.js
+│   │   └── productController.js
+│   ├── middleware/       <span class="comment"># Custom middleware</span>
+│   │   ├── auth.js
+│   │   └── errorHandler.js
+│   ├── models/           <span class="comment"># Data models (Day 7+)</span>
+│   ├── utils/            <span class="comment"># Helper functions</span>
+│   └── app.js            <span class="comment"># Express app setup</span>
+├── package.json
+├── .env                  <span class="comment"># Environment variables</span>
+└── server.js             <span class="comment"># Entry point</span></code></pre>
+</div>
+<h3>Express Router</h3>
+<p>Express Router creates modular route handlers. Each router handles routes for one resource:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">src/routes/userRoutes.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.Router();
+
+<span class="comment">// Import controller functions</span>
+<span class="keyword">const</span> userController = require(<span class="string">'../controllers/userController'</span>);
+
+<span class="comment">// Define routes - paths are relative to where router is mounted</span>
+<span class="comment">// If mounted at /api/users, these become /api/users and /api/users/:id</span>
+
+router.get(<span class="string">'/'</span>, userController.getAllUsers);
+router.get(<span class="string">'/:id'</span>, userController.getUserById);
+router.post(<span class="string">'/'</span>, userController.createUser);
+router.put(<span class="string">'/:id'</span>, userController.updateUser);
+router.delete(<span class="string">'/:id'</span>, userController.deleteUser);
+
+module.exports = router;</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">src/routes/productRoutes.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.Router();
+<span class="keyword">const</span> productController = require(<span class="string">'../controllers/productController'</span>);
+
+router.get(<span class="string">'/'</span>, productController.getAllProducts);
+router.get(<span class="string">'/:id'</span>, productController.getProductById);
+router.post(<span class="string">'/'</span>, productController.createProduct);
+router.put(<span class="string">'/:id'</span>, productController.updateProduct);
+router.delete(<span class="string">'/:id'</span>, productController.deleteProduct);
+
+module.exports = router;</code></pre>
+</div>
+<h3>Controllers</h3>
+<p>Controllers contain the logic for handling requests. They keep routes clean and logic testable:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">src/controllers/userController.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// In-memory database (replace with real DB later)</span>
+<span class="keyword">let</span> users = [
+    { id: <span class="number">1</span>, name: <span class="string">'Alice'</span>, email: <span class="string">'alice@example.com'</span> },
+    { id: <span class="number">2</span>, name: <span class="string">'Bob'</span>, email: <span class="string">'bob@example.com'</span> }
+];
+<span class="keyword">let</span> nextId = <span class="number">3</span>;
+
+<span class="comment">// GET /api/users</span>
+exports.getAllUsers = (req, res) => {
+    <span class="comment">// Support filtering via query params</span>
+    <span class="keyword">let</span> result = users;
+
+    <span class="keyword">if</span> (req.query.name) {
+        result = result.filter(u =>
+            u.name.toLowerCase().includes(req.query.name.toLowerCase())
+        );
+    }
+
+    res.json({
+        count: result.length,
+        users: result
+    });
+};
+
+<span class="comment">// GET /api/users/:id</span>
+exports.getUserById = (req, res) => {
+    <span class="keyword">const</span> user = users.find(u => u.id === parseInt(req.params.id));
+
+    <span class="keyword">if</span> (!user) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({
+            error: <span class="string">'User not found'</span>
+        });
+    }
+
+    res.json(user);
+};
+
+<span class="comment">// POST /api/users</span>
+exports.createUser = (req, res) => {
+    <span class="keyword">const</span> { name, email } = req.body;
+
+    <span class="comment">// Validation</span>
+    <span class="keyword">const</span> errors = [];
+    <span class="keyword">if</span> (!name) errors.push(<span class="string">'Name is required'</span>);
+    <span class="keyword">if</span> (!email) errors.push(<span class="string">'Email is required'</span>);
+    <span class="keyword">if</span> (email && !email.includes(<span class="string">'@'</span>)) errors.push(<span class="string">'Invalid email format'</span>);
+
+    <span class="keyword">if</span> (errors.length > <span class="number">0</span>) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({ errors });
+    }
+
+    <span class="comment">// Check for duplicate email</span>
+    <span class="keyword">if</span> (users.some(u => u.email === email)) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({
+            error: <span class="string">'Email already exists'</span>
+        });
+    }
+
+    <span class="keyword">const</span> newUser = {
+        id: nextId++,
+        name,
+        email
+    };
+
+    users.push(newUser);
+
+    res.status(<span class="number">201</span>).json(newUser);
+};
+
+<span class="comment">// PUT /api/users/:id</span>
+exports.updateUser = (req, res) => {
+    <span class="keyword">const</span> id = parseInt(req.params.id);
+    <span class="keyword">const</span> index = users.findIndex(u => u.id === id);
+
+    <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'User not found'</span> });
+    }
+
+    <span class="keyword">const</span> { name, email } = req.body;
+
+    <span class="keyword">if</span> (!name || !email) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({
+            error: <span class="string">'Name and email are required'</span>
+        });
+    }
+
+    users[index] = { id, name, email };
+
+    res.json(users[index]);
+};
+
+<span class="comment">// DELETE /api/users/:id</span>
+exports.deleteUser = (req, res) => {
+    <span class="keyword">const</span> id = parseInt(req.params.id);
+    <span class="keyword">const</span> index = users.findIndex(u => u.id === id);
+
+    <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+        <span class="keyword">return</span> res.status(<span class="number">404</span>).json({ error: <span class="string">'User not found'</span> });
+    }
+
+    users.splice(index, <span class="number">1</span>);
+
+    res.status(<span class="number">204</span>).end();
+};</code></pre>
+</div>
+<h3>Main Application File</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">src/app.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> app = express();
+
+<span class="comment">// Import routes</span>
+<span class="keyword">const</span> userRoutes = require(<span class="string">'./routes/userRoutes'</span>);
+<span class="keyword">const</span> productRoutes = require(<span class="string">'./routes/productRoutes'</span>);
+
+<span class="comment">// Middleware</span>
+app.use(express.json());
+
+<span class="comment">// Request logging middleware</span>
+app.use((req, res, next) => {
+    console.log(<span class="string">`${<span class="keyword">new</span> Date().toISOString()} ${req.method} ${req.url}`</span>);
+    next();
+});
+
+<span class="comment">// Mount routes</span>
+app.use(<span class="string">'/api/users'</span>, userRoutes);
+app.use(<span class="string">'/api/products'</span>, productRoutes);
+
+<span class="comment">// Health check endpoint</span>
+app.get(<span class="string">'/health'</span>, (req, res) => {
+    res.json({ status: <span class="string">'OK'</span>, timestamp: <span class="keyword">new</span> Date().toISOString() });
+});
+
+<span class="comment">// 404 handler - must be after all routes</span>
+app.use((req, res) => {
+    res.status(<span class="number">404</span>).json({ error: <span class="string">'Endpoint not found'</span> });
+});
+
+<span class="comment">// Error handler - must be last and have 4 parameters</span>
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(<span class="number">500</span>).json({ error: <span class="string">'Internal server error'</span> });
+});
+
+module.exports = app;</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">server.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="keyword">const</span> app = require(<span class="string">'./src/app'</span>);
+
+<span class="keyword">const</span> PORT = process.env.PORT || <span class="number">3000</span>;
+
+app.listen(PORT, () => {
+    console.log(<span class="string">`Server running on http://localhost:${PORT}`</span>);
+    console.log(<span class="string">`API available at http://localhost:${PORT}/api`</span>);
+});</code></pre>
+</div>
+<h3>Input Validation</h3>
+<p>Always validate user input. Never trust data from requests:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Basic Validation Function</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// src/utils/validators.js</span>
+exports.validateUser = (data) => {
+    <span class="keyword">const</span> errors = [];
+
+    <span class="comment">// Required fields</span>
+    <span class="keyword">if</span> (!data.name || data.name.trim() === <span class="string">''</span>) {
+        errors.push(<span class="string">'Name is required'</span>);
+    }
+
+    <span class="keyword">if</span> (!data.email) {
+        errors.push(<span class="string">'Email is required'</span>);
+    }
+
+    <span class="comment">// Format validation</span>
+    <span class="keyword">if</span> (data.name && data.name.length < <span class="number">2</span>) {
+        errors.push(<span class="string">'Name must be at least 2 characters'</span>);
+    }
+
+    <span class="keyword">if</span> (data.name && data.name.length > <span class="number">50</span>) {
+        errors.push(<span class="string">'Name must be less than 50 characters'</span>);
+    }
+
+    <span class="keyword">const</span> emailRegex = <span class="string">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>;
+    <span class="keyword">if</span> (data.email && !emailRegex.test(data.email)) {
+        errors.push(<span class="string">'Invalid email format'</span>);
+    }
+
+    <span class="keyword">if</span> (data.age && (data.age < <span class="number">0</span> || data.age > <span class="number">150</span>)) {
+        errors.push(<span class="string">'Invalid age'</span>);
+    }
+
+    <span class="keyword">return</span> {
+        isValid: errors.length === <span class="number">0</span>,
+        errors
+    };
+};
+
+<span class="comment">// Usage in controller</span>
+<span class="keyword">const</span> { validateUser } = require(<span class="string">'../utils/validators'</span>);
+
+exports.createUser = (req, res) => {
+    <span class="keyword">const</span> validation = validateUser(req.body);
+
+    <span class="keyword">if</span> (!validation.isValid) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({ errors: validation.errors });
+    }
+
+    <span class="comment">// Continue with creating user...</span>
+};</code></pre>
+</div>
+<h3>Error Handling Middleware</h3>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">src/middleware/errorHandler.js</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment">// Custom error class</span>
+<span class="keyword">class</span> AppError <span class="keyword">extends</span> Error {
+    <span class="keyword">constructor</span>(message, statusCode) {
+        <span class="keyword">super</span>(message);
+        <span class="keyword">this</span>.statusCode = statusCode;
+        <span class="keyword">this</span>.isOperational = <span class="keyword">true</span>;
+    }
+}
+
+<span class="comment">// Error handling middleware (4 parameters!)</span>
+<span class="keyword">const</span> errorHandler = (err, req, res, next) => {
+    <span class="comment">// Log error for debugging</span>
+    console.error(<span class="string">'Error:'</span>, err);
+
+    <span class="comment">// Handle known operational errors</span>
+    <span class="keyword">if</span> (err.isOperational) {
+        <span class="keyword">return</span> res.status(err.statusCode).json({
+            error: err.message
+        });
+    }
+
+    <span class="comment">// Handle JSON parsing errors</span>
+    <span class="keyword">if</span> (err <span class="keyword">instanceof</span> SyntaxError && err.status === <span class="number">400</span>) {
+        <span class="keyword">return</span> res.status(<span class="number">400</span>).json({
+            error: <span class="string">'Invalid JSON'</span>
+        });
+    }
+
+    <span class="comment">// Unknown errors - don't leak details in production</span>
+    res.status(<span class="number">500</span>).json({
+        error: process.env.NODE_ENV === <span class="string">'production'</span>
+            ? <span class="string">'Something went wrong'</span>
+            : err.message
+    });
+};
+
+module.exports = { AppError, errorHandler };
+
+<span class="comment">// Usage in controller</span>
+<span class="keyword">const</span> { AppError } = require(<span class="string">'../middleware/errorHandler'</span>);
+
+exports.getUserById = (req, res, next) => {
+    <span class="keyword">const</span> user = users.find(u => u.id === parseInt(req.params.id));
+
+    <span class="keyword">if</span> (!user) {
+        <span class="keyword">return</span> next(<span class="keyword">new</span> AppError(<span class="string">'User not found'</span>, <span class="number">404</span>));
+    }
+
+    res.json(user);
+};</code></pre>
+</div>
+<h3>Environment Variables</h3>
+<p>Never hardcode sensitive data. Use environment variables:</p>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">.env file</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code>PORT=3000
+NODE_ENV=development
+DATABASE_URL=mongodb://localhost:27017/myapp
+JWT_SECRET=your-secret-key-here</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header">
+<span class="code-label">Using dotenv</span>
+<button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>
+</div>
+<pre><code><span class="comment"># Install dotenv</span>
+npm install dotenv
+
+<span class="comment">// At the top of server.js</span>
+require(<span class="string">'dotenv'</span>).config();
+
+<span class="comment">// Now access variables</span>
+<span class="keyword">const</span> PORT = process.env.PORT || <span class="number">3000</span>;
+<span class="keyword">const</span> dbUrl = process.env.DATABASE_URL;</code></pre>
+</div>
+<div class="important">
+<div class="important-label">Security</div>
+<p>NEVER commit .env files to git! Add .env to your .gitignore file. Instead, provide a .env.example with placeholder values.</p>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=pKd0Rpw7O48" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">REST API Design Best Practices</div><div class="video-channel">Programming with Mosh</div></div>
+</a>
+<a href="https://www.youtube.com/watch?v=0oXYLzuucwE" target="_blank" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+<div class="video-info"><div class="video-title">Express Project Structure</div><div class="video-channel">Academind</div></div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check: Day 5</h4>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">1. What is the purpose of Express Router?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">To handle database connections</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">To create modular, mountable route handlers</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">To validate request data</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">To serve static files</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Express Router creates mini-applications with their own routes. You can then mount these routers at specific paths, keeping your code organized and modular.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Router creates modular route handlers that can be mounted at specific paths. This separates routes by resource (users, products) into different files for better organization.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">2. Which URL pattern is RESTful?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">DELETE /api/users/123</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">GET /api/deleteUser/123</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">POST /api/removeUser</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">GET /api/users/delete/123</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> RESTful APIs use HTTP methods (GET, POST, PUT, DELETE) for actions, not verbs in URLs. DELETE /api/users/123 uses the DELETE method on the resource /api/users/123.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> REST uses HTTP methods for actions. URLs should be nouns (resources), not verbs. DELETE /api/users/123 correctly uses the DELETE method on the user resource.</div>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">3. What should you do with sensitive data like API keys?</p>
+<div class="options">
+<div class="option" data-index="0"><span class="option-marker">A</span><span class="option-text">Hardcode them in your source files</span></div>
+<div class="option" data-index="1"><span class="option-marker">B</span><span class="option-text">Commit them to git for backup</span></div>
+<div class="option" data-index="2"><span class="option-marker">C</span><span class="option-text">Store them in environment variables</span></div>
+<div class="option" data-index="3"><span class="option-marker">D</span><span class="option-text">Put them in comments for documentation</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Sensitive data should be stored in environment variables (like .env files) and never committed to version control. This keeps secrets safe and allows different values per environment.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Never hardcode or commit sensitive data. Use environment variables (.env files) and add .env to .gitignore. This protects secrets and allows different configs per environment.</div>
+</div>
+</div>
+<div class="project-box">
+<span class="project-label">Project</span>
+<h4>Build a Complete Blog API</h4>
+<p>Create a fully structured REST API with:</p>
+<ul>
+<li>Proper project structure (routes, controllers, middleware folders)</li>
+<li>Posts resource: GET all, GET one, POST, PUT, DELETE</li>
+<li>Comments resource nested under posts: /api/posts/:postId/comments</li>
+<li>Input validation for all POST/PUT requests</li>
+<li>Custom error handling middleware</li>
+<li>Request logging middleware</li>
+<li>Environment variables for PORT</li>
+</ul>
+</div>
+<div class="completion-box">
+<h4>Day 5 Complete!</h4>
+<p>You now know how to build professional REST APIs with proper structure. You understand routers, controllers, validation, error handling, and environment variables. This is how production APIs are built.</p>
+<p>Tomorrow, we add persistence! No more losing data when the server restarts. We will learn MongoDB - a powerful NoSQL database.</p>
+</div>
+</section>
+<div class="page-nav">
+<a href="day4.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 4: Express.js</a>
+<a href="day6.html">Day 6: MongoDB<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</div>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
