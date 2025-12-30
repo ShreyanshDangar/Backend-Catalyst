@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Day 8: Master data modeling in MongoDB - Schema design patterns, relationships, population, and validation.">
+<title>Day 8: Data Modeling | Backend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="../index.html" class="nav-brand">Backend Mastery</a>
+<a href="../index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+    <li><a href="day1.html">Day 1</a></li>
+    <li><a href="day2.html">Day 2</a></li>
+    <li><a href="day3.html">Day 3</a></li>
+    <li><a href="day4.html">Day 4</a></li>
+    <li><a href="day5.html">Day 5</a></li>
+    <li><a href="day6.html">Day 6</a></li>
+    <li><a href="day7.html">Day 7</a></li>
+    <li><a href="day8.html" class="active">Day 8</a></li>
+    <li><a href="day9.html">Day 9</a></li>
+    <li><a href="day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+<button class="nav-btn settings-btn" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+<button class="hamburger"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="day8.html" class="active"><span class="day-num">08</span>Data Modeling</a>
+<a href="day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="day-section">
+<div class="day-header">
+<span class="day-label">Day 8</span>
+<h2>Data Modeling</h2>
+<p>Good schema design is the foundation of performant applications. Today you learn to model relationships, embed vs reference data, and implement robust validation.</p>
+</div>
+<h3>Embedding vs Referencing</h3>
+<p>In MongoDB, you have two main ways to represent relationships between data:</p>
+<div class="concept-box">
+<h4>When to Embed (Denormalize)</h4>
+<ul>
+<li>Data is frequently accessed together</li>
+<li>One-to-few relationships (1 user : few addresses)</li>
+<li>Data does not change frequently</li>
+<li>You need atomic updates on related data</li>
+</ul>
+</div>
+<div class="concept-box">
+<h4>When to Reference (Normalize)</h4>
+<ul>
+<li>Data is accessed independently</li>
+<li>One-to-many or many-to-many relationships</li>
+<li>Data changes frequently</li>
+<li>Document size would exceed 16MB limit</li>
+</ul>
+</div>
+<h3>Embedding Documents</h3>
+<p>Embedding stores related data in the same document. Here's a user with embedded addresses:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">models/UserWithAddresses.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="comment">// Define embedded address schema (sub-document)</span>
+<span class="keyword">const</span> addressSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  <span class="comment">// Street address line</span>
+  street: { type: String, required: <span class="keyword">true</span> },
+  <span class="comment">// City name</span>
+  city: { type: String, required: <span class="keyword">true</span> },
+  <span class="comment">// State or province</span>
+  state: String,
+  <span class="comment">// Postal/ZIP code</span>
+  zipCode: { type: String, required: <span class="keyword">true</span> },
+  <span class="comment">// Country with default value</span>
+  country: { type: String, default: <span class="string">'USA'</span> },
+  <span class="comment">// Whether this is the primary address</span>
+  isPrimary: { type: Boolean, default: <span class="keyword">false</span> }
+});
+
+<span class="comment">// Main user schema with embedded addresses</span>
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  name: { type: String, required: <span class="keyword">true</span> },
+  email: { type: String, required: <span class="keyword">true</span>, unique: <span class="keyword">true</span> },
+  <span class="comment">// Array of embedded address documents</span>
+  <span class="comment">// Each element follows addressSchema structure</span>
+  addresses: [addressSchema],
+  <span class="comment">// Timestamp when user was created</span>
+  createdAt: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);</code></pre>
+</div>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Working with Embedded Documents</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// Create user with embedded addresses</span>
+<span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">create</span>({
+  name: <span class="string">'John Doe'</span>,
+  email: <span class="string">'john@example.com'</span>,
+  addresses: [
+    {
+      street: <span class="string">'123 Main St'</span>,
+      city: <span class="string">'New York'</span>,
+      state: <span class="string">'NY'</span>,
+      zipCode: <span class="string">'10001'</span>,
+      isPrimary: <span class="keyword">true</span>
+    },
+    {
+      street: <span class="string">'456 Oak Ave'</span>,
+      city: <span class="string">'Los Angeles'</span>,
+      state: <span class="string">'CA'</span>,
+      zipCode: <span class="string">'90001'</span>
+    }
+  ]
+});
+
+<span class="comment">// Add new address to existing user</span>
+<span class="keyword">await</span> User.<span class="function">findByIdAndUpdate</span>(userId, {
+  $push: {
+    addresses: {
+      street: <span class="string">'789 Pine Rd'</span>,
+      city: <span class="string">'Chicago'</span>,
+      state: <span class="string">'IL'</span>,
+      zipCode: <span class="string">'60601'</span>
+    }
+  }
+});
+
+<span class="comment">// Update specific embedded document by its _id</span>
+<span class="keyword">await</span> User.<span class="function">findOneAndUpdate</span>(
+  { _id: userId, <span class="string">'addresses._id'</span>: addressId },
+  { $set: { <span class="string">'addresses.$.city'</span>: <span class="string">'Brooklyn'</span> } }
+);
+
+<span class="comment">// Remove embedded document</span>
+<span class="keyword">await</span> User.<span class="function">findByIdAndUpdate</span>(userId, {
+  $pull: { addresses: { _id: addressId } }
+});</code></pre>
+</div>
+<h3>Referencing Documents</h3>
+<p>References store only the ObjectId, requiring a separate query to fetch related data:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">models/Post.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  <span class="comment">// Post title - required field</span>
+  title: { type: String, required: <span class="keyword">true</span> },
+  <span class="comment">// Post content body</span>
+  content: { type: String, required: <span class="keyword">true</span> },
+  <span class="comment">// Reference to User model - stores ObjectId</span>
+  <span class="comment">// 'ref' tells Mongoose which model to use for population</span>
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: <span class="string">'User'</span>,
+    required: <span class="keyword">true</span>
+  },
+  <span class="comment">// Array of references for many-to-many relationship</span>
+  <span class="comment">// A post can have multiple tags</span>
+  tags: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: <span class="string">'Tag'</span>
+  }],
+  <span class="comment">// Comments as embedded documents (hybrid approach)</span>
+  comments: [{
+    <span class="comment">// Reference to user who made the comment</span>
+    user: { type: mongoose.Schema.Types.ObjectId, ref: <span class="string">'User'</span> },
+    <span class="comment">// Comment text content</span>
+    text: { type: String, required: <span class="keyword">true</span> },
+    <span class="comment">// When the comment was created</span>
+    createdAt: { type: Date, default: Date.now }
+  }],
+  createdAt: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'Post'</span>, postSchema);</code></pre>
+</div>
+<h3>Population - Fetching Referenced Data</h3>
+<p>Population automatically replaces ObjectId references with actual documents:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Using populate()</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="comment">// Basic population - replace author ObjectId with user document</span>
+<span class="keyword">const</span> post = <span class="keyword">await</span> Post.<span class="function">findById</span>(postId).<span class="function">populate</span>(<span class="string">'author'</span>);
+<span class="comment">// Now post.author is the full user object, not just an ID</span>
+console.<span class="function">log</span>(post.author.name);  <span class="comment">// 'John Doe'</span>
+
+<span class="comment">// Populate with field selection - only get specific fields</span>
+<span class="keyword">const</span> post = <span class="keyword">await</span> Post.<span class="function">findById</span>(postId)
+  .<span class="function">populate</span>(<span class="string">'author'</span>, <span class="string">'name email'</span>);  <span class="comment">// only name and email</span>
+
+<span class="comment">// Populate multiple fields at once</span>
+<span class="keyword">const</span> post = <span class="keyword">await</span> Post.<span class="function">findById</span>(postId)
+  .<span class="function">populate</span>(<span class="string">'author'</span>, <span class="string">'name'</span>)
+  .<span class="function">populate</span>(<span class="string">'tags'</span>, <span class="string">'name color'</span>);
+
+<span class="comment">// Nested population - populate references within populated docs</span>
+<span class="keyword">const</span> post = <span class="keyword">await</span> Post.<span class="function">findById</span>(postId)
+  .<span class="function">populate</span>({
+    path: <span class="string">'comments.user'</span>,       <span class="comment">// populate user in each comment</span>
+    select: <span class="string">'name avatar'</span>        <span class="comment">// only these fields</span>
+  });
+
+<span class="comment">// Advanced population with match and options</span>
+<span class="keyword">const</span> posts = <span class="keyword">await</span> Post.<span class="function">find</span>()
+  .<span class="function">populate</span>({
+    path: <span class="string">'author'</span>,
+    match: { isActive: <span class="keyword">true</span> },   <span class="comment">// only populate active authors</span>
+    select: <span class="string">'name email -_id'</span>   <span class="comment">// exclude _id</span>
+  });
+
+<span class="comment">// Populate all posts and sort by author name</span>
+<span class="keyword">const</span> posts = <span class="keyword">await</span> Post.<span class="function">find</span>()
+  .<span class="function">populate</span>({
+    path: <span class="string">'author'</span>,
+    options: { sort: { name: <span class="number">1</span> } }
+  });</code></pre>
+</div>
+<h3>Virtual Population</h3>
+<p>Virtuals allow you to populate without storing references in both directions:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">models/Author.js</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="keyword">const</span> authorSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  name: { type: String, required: <span class="keyword">true</span> },
+  email: { type: String, required: <span class="keyword">true</span> }
+}, {
+  <span class="comment">// Enable virtuals in JSON and Object output</span>
+  toJSON: { virtuals: <span class="keyword">true</span> },
+  toObject: { virtuals: <span class="keyword">true</span> }
+});
+
+<span class="comment">// Virtual field 'posts' - not stored in database</span>
+<span class="comment">// Dynamically populated based on Post.author reference</span>
+authorSchema.<span class="function">virtual</span>(<span class="string">'posts'</span>, {
+  ref: <span class="string">'Post'</span>,              <span class="comment">// Model to populate from</span>
+  localField: <span class="string">'_id'</span>,        <span class="comment">// Field in Author</span>
+  foreignField: <span class="string">'author'</span>    <span class="comment">// Field in Post that references Author</span>
+});
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'Author'</span>, authorSchema);
+
+<span class="comment">// Usage: Get author with all their posts</span>
+<span class="keyword">const</span> author = <span class="keyword">await</span> Author.<span class="function">findById</span>(authorId)
+  .<span class="function">populate</span>(<span class="string">'posts'</span>);  <span class="comment">// posts is virtual, populated dynamically</span>
+
+console.<span class="function">log</span>(author.posts);  <span class="comment">// Array of all posts by this author</span></code></pre>
+</div>
+<h3>Schema Validation</h3>
+<p>Mongoose provides powerful built-in and custom validation:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Comprehensive Validation</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> productSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  <span class="comment">// Name: required with length constraints</span>
+  name: {
+    type: String,
+    required: [<span class="keyword">true</span>, <span class="string">'Product name is required'</span>],
+    minlength: [<span class="number">2</span>, <span class="string">'Name must be at least 2 characters'</span>],
+    maxlength: [<span class="number">100</span>, <span class="string">'Name cannot exceed 100 characters'</span>],
+    trim: <span class="keyword">true</span>
+  },
+
+  <span class="comment">// Price: required with minimum value</span>
+  price: {
+    type: Number,
+    required: [<span class="keyword">true</span>, <span class="string">'Price is required'</span>],
+    min: [<span class="number">0</span>, <span class="string">'Price cannot be negative'</span>]
+  },
+
+  <span class="comment">// Sale price: custom validator to ensure it's less than price</span>
+  salePrice: {
+    type: Number,
+    validate: {
+      <span class="comment">// Validator function - 'this' refers to document</span>
+      validator: <span class="keyword">function</span>(value) {
+        <span class="comment">// Only validate if salePrice is provided</span>
+        <span class="keyword">return</span> value == <span class="keyword">null</span> || value < <span class="keyword">this</span>.price;
+      },
+      message: <span class="string">'Sale price must be less than regular price'</span>
+    }
+  },
+
+  <span class="comment">// Category: must be one of predefined values</span>
+  category: {
+    type: String,
+    enum: {
+      values: [<span class="string">'electronics'</span>, <span class="string">'clothing'</span>, <span class="string">'books'</span>, <span class="string">'home'</span>],
+      message: <span class="string">'{VALUE} is not a valid category'</span>
+    }
+  },
+
+  <span class="comment">// Email: regex pattern validation</span>
+  contactEmail: {
+    type: String,
+    match: [
+      <span class="string">/^\S+@\S+\.\S+$/</span>,
+      <span class="string">'Please provide a valid email address'</span>
+    ]
+  },
+
+  <span class="comment">// SKU: custom async validator (check uniqueness)</span>
+  sku: {
+    type: String,
+    validate: {
+      validator: <span class="keyword">async function</span>(value) {
+        <span class="comment">// Check if SKU already exists (excluding current doc)</span>
+        <span class="keyword">const</span> count = <span class="keyword">await</span> mongoose.<span class="function">model</span>(<span class="string">'Product'</span>)
+          .<span class="function">countDocuments</span>({ sku: value, _id: { $ne: <span class="keyword">this</span>._id } });
+        <span class="keyword">return</span> count === <span class="number">0</span>;
+      },
+      message: <span class="string">'SKU must be unique'</span>
+    }
+  },
+
+  <span class="comment">// Stock: integer validation using custom validator</span>
+  stock: {
+    type: Number,
+    default: <span class="number">0</span>,
+    validate: {
+      validator: Number.isInteger,
+      message: <span class="string">'Stock must be a whole number'</span>
+    }
+  }
+});</code></pre>
+</div>
+<h3>Middleware (Hooks)</h3>
+<p>Middleware functions run at specific points in the document lifecycle:</p>
+<div class="code-block">
+<div class="code-header"><span class="code-label">Schema Middleware</span><button class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button></div>
+<pre><code><span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+  name: String,
+  email: String,
+  password: String,
+  slug: String,
+  updatedAt: Date
+});
+
+<span class="comment">// PRE middleware - runs BEFORE the operation</span>
+<span class="comment">// 'save' hook runs before document.save()</span>
+userSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">function</span>(next) {
+  <span class="comment">// 'this' refers to the document being saved</span>
+  <span class="comment">// Generate slug from name</span>
+  <span class="keyword">this</span>.slug = <span class="keyword">this</span>.name.toLowerCase().<span class="function">replace</span>(<span class="string">/\s+/g</span>, <span class="string">'-'</span>);
+  <span class="comment">// Update timestamp</span>
+  <span class="keyword">this</span>.updatedAt = <span class="keyword">new</span> <span class="function">Date</span>();
+  <span class="comment">// Call next() to continue to save</span>
+  <span class="function">next</span>();
+});
+
+<span class="comment">// PRE middleware for find queries</span>
+<span class="comment">// Runs before any find operation</span>
+userSchema.<span class="function">pre</span>(<span class="string">/^find/</span>, <span class="keyword">function</span>(next) {
+  <span class="comment">// 'this' is the query object</span>
+  <span class="comment">// Automatically exclude soft-deleted documents</span>
+  <span class="keyword">this</span>.<span class="function">find</span>({ isDeleted: { $ne: <span class="keyword">true</span> } });
+  <span class="function">next</span>();
+});
+
+<span class="comment">// POST middleware - runs AFTER the operation</span>
+userSchema.<span class="function">post</span>(<span class="string">'save'</span>, <span class="keyword">function</span>(doc, next) {
+  <span class="comment">// 'doc' is the saved document</span>
+  console.<span class="function">log</span>(<span class="string">`User ${doc.name} was saved`</span>);
+  <span class="function">next</span>();
+});
+
+<span class="comment">// PRE middleware for remove - cleanup related data</span>
+userSchema.<span class="function">pre</span>(<span class="string">'remove'</span>, <span class="keyword">async function</span>(next) {
+  <span class="comment">// Delete all posts by this user when user is deleted</span>
+  <span class="keyword">await</span> mongoose.<span class="function">model</span>(<span class="string">'Post'</span>).<span class="function">deleteMany</span>({ author: <span class="keyword">this</span>._id });
+  <span class="function">next</span>();
+});</code></pre>
+</div>
+<h3>Video Resources</h3>
+<div class="video-resources">
+<a href="https://www.youtube.com/watch?v=leNCfU5SYR8" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">MongoDB Schema Design Best Practices</div>
+<div class="video-channel">MongoDB</div>
+</div>
+</a>
+<a href="https://www.youtube.com/watch?v=9OPP_1eAENg" target="_blank" rel="noopener" class="video-link">
+<div class="video-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="video-info">
+<div class="video-title">Mongoose Population Explained</div>
+<div class="video-channel">Academind</div>
+</div>
+</a>
+</div>
+<div class="mcq-section">
+<div class="mcq-header">
+<div class="mcq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+<h4>Knowledge Check</h4>
+</div>
+<div class="question" data-correct="2">
+<p class="question-text">1. When should you embed documents rather than use references?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">When you have many-to-many relationships</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">When related data changes frequently</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">When data is frequently accessed together and rarely changes</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">When documents might exceed 16MB</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Embedding is ideal when related data is accessed together (reducing queries) and doesn't change often (avoiding update complexity).</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> Embed when data is frequently accessed together and rarely changes independently. Reference when data changes often or has many-to-many relationships.</div>
+</div>
+<div class="question" data-correct="1">
+<p class="question-text">2. What does the populate() method do?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">Creates new documents in referenced collections</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">Replaces ObjectId references with actual documents</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">Embeds documents directly into the schema</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">Validates referenced documents exist</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> populate() performs a separate query to fetch referenced documents and replaces ObjectId fields with the full document data.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> populate() replaces ObjectId references with actual documents from the referenced collection, essentially joining data from different collections.</div>
+</div>
+<div class="question" data-correct="0">
+<p class="question-text">3. When does a 'pre save' middleware run?</p>
+<div class="options">
+<div class="option"><span class="option-marker">A</span><span class="option-text">Before the document is saved to the database</span></div>
+<div class="option"><span class="option-marker">B</span><span class="option-text">After the document is saved to the database</span></div>
+<div class="option"><span class="option-marker">C</span><span class="option-text">When the schema is defined</span></div>
+<div class="option"><span class="option-marker">D</span><span class="option-text">When the model is created</span></div>
+</div>
+<div class="feedback correct"><strong>Correct!</strong> Pre middleware runs before the specified operation. 'pre save' runs before document.save(), allowing you to modify data or perform validation.</div>
+<div class="feedback incorrect"><strong>Not quite.</strong> 'pre' middleware runs BEFORE the operation. 'pre save' executes before saving, commonly used for data transformation, hashing passwords, or generating slugs.</div>
+</div>
+</div>
+<div class="project-box">
+<span class="project-label">Practice Project</span>
+<h4>Build a Blog Data Model</h4>
+<p>Design a complete blog system with proper relationships:</p>
+<ul>
+<li>Author model with name, email, bio, and virtual 'posts' field</li>
+<li>Post model with title, content, author (ref), tags (refs), and embedded comments</li>
+<li>Tag model with name and color</li>
+<li>Add pre-save middleware to generate slugs from titles</li>
+<li>Create an API endpoint that returns posts with populated author and tags</li>
+</ul>
+</div>
+</section>
+<nav class="page-nav">
+<a href="day7.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Day 7: Mongoose</a>
+<a href="day9.html">Day 9: Authentication<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+</nav>
+</main>
+<script src="../JS/script.js"></script>
+</body>
+</html>
