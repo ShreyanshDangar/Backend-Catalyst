@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Learn backend development from scratch. Master Node.js, Express, MongoDB, authentication, and deployment in 15 days.">
+<title>Backend Development Mastery | Complete Node.js Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body data-theme="sand" data-font="merriweather">
+<div class="page-loader"><div class="loader-spinner"></div></div>
+<div class="scroll-progress"></div>
+<nav class="nav">
+<div class="nav-left">
+<a href="index.html" class="nav-brand">Backend Mastery</a>
+<a href="index.html" class="home-btn" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+</div>
+<div class="nav-center">
+<div class="nav-pill">
+<ul class="nav-links">
+<li><a href="days/day1.html">Day 1</a></li>
+<li><a href="days/day2.html">Day 2</a></li>
+<li><a href="days/day3.html">Day 3</a></li>
+<li><a href="days/day4.html">Day 4</a></li>
+<li><a href="days/day5.html">Day 5</a></li>
+<li><a href="days/day6.html">Day 6</a></li>
+<li><a href="days/day7.html">Day 7</a></li>
+<li><a href="days/day8.html">Day 8</a></li>
+<li><a href="days/day9.html">Day 9</a></li>
+<li><a href="days/day10.html">Day 10</a></li>
+</ul>
+</div>
+</div>
+<div class="nav-right">
+<button class="nav-btn bookmark-btn" title="Bookmark">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+</button>
+<button class="nav-btn settings-btn" title="Settings">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+</button>
+<button class="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</div>
+</nav>
+<div class="mobile-menu">
+<a href="days/day1.html"><span class="day-num">01</span>How The Internet Works</a>
+<a href="days/day2.html"><span class="day-num">02</span>Your First Node.js Server</a>
+<a href="days/day3.html"><span class="day-num">03</span>HTTP Methods and JSON</a>
+<a href="days/day4.html"><span class="day-num">04</span>Express.js Framework</a>
+<a href="days/day5.html"><span class="day-num">05</span>Building REST APIs</a>
+<a href="days/day6.html"><span class="day-num">06</span>MongoDB Fundamentals</a>
+<a href="days/day7.html"><span class="day-num">07</span>Mongoose ODM</a>
+<a href="days/day8.html"><span class="day-num">08</span>Data Modeling</a>
+<a href="days/day9.html"><span class="day-num">09</span>Authentication Basics</a>
+<a href="days/day10.html"><span class="day-num">10</span>JWT Implementation</a>
+</div>
+<div class="settings-panel">
+<h3>Settings</h3>
+<div class="settings-section">
+<div class="settings-label">Theme</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt theme-opt theme-sand active" data-theme="sand"><span class="theme-preview"></span>Sand</div>
+<div class="settings-opt theme-opt theme-cloud" data-theme="cloud"><span class="theme-preview"></span>Cloud</div>
+<div class="settings-opt theme-opt theme-midnight" data-theme="midnight"><span class="theme-preview"></span>Midnight</div>
+<div class="settings-opt theme-opt theme-forest" data-theme="forest"><span class="theme-preview"></span>Forest</div>
+<div class="settings-opt theme-opt theme-sunset" data-theme="sunset"><span class="theme-preview"></span>Sunset</div>
+<div class="settings-opt theme-opt theme-purple" data-theme="purple"><span class="theme-preview"></span>Purple</div>
+<div class="settings-opt theme-opt theme-ocean" data-theme="ocean"><span class="theme-preview"></span>Ocean</div>
+<div class="settings-opt theme-opt theme-crimson" data-theme="crimson"><span class="theme-preview"></span>Crimson</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font</div>
+<div class="settings-options" style="grid-template-columns:1fr 1fr;">
+<div class="settings-opt font-opt active" data-font="merriweather">Merriweather</div>
+<div class="settings-opt font-opt" data-font="inter">Inter</div>
+<div class="settings-opt font-opt" data-font="jetbrains">JetBrains</div>
+<div class="settings-opt font-opt" data-font="space">Space Grotesk</div>
+<div class="settings-opt font-opt" data-font="fira">Fira Code</div>
+<div class="settings-opt font-opt" data-font="playfair">Playfair</div>
+</div>
+</div>
+<div class="settings-section">
+<div class="settings-label">Font Size</div>
+<div class="font-size-control">
+<button class="font-size-btn" id="font-decrease">-</button>
+<span class="font-size-value" id="font-size-display">100%</span>
+<button class="font-size-btn" id="font-increase">+</button>
+</div>
+</div>
+<div class="bookmark-controls">
+<div class="settings-label">Bookmark</div>
+<div class="bookmark-status">No bookmark set</div>
+<div class="bookmark-actions">
+<button class="set-bookmark">Set Here</button>
+<button class="goto-bookmark" disabled>Go To</button>
+<button class="remove-bookmark danger" disabled>Remove</button>
+</div>
+</div>
+</div>
+<main class="container">
+<section class="hero">
+<h1>Backend Development Mastery</h1>
+<p>A comprehensive journey from zero to production-ready backends. Learn by understanding, not just copying code.</p>
+<div class="hero-meta">
+<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>15 Days</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>Beginner Friendly</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>Hands-on Projects</span>
+</div>
+</section>
+<h2 style="text-align:center;margin-bottom:2rem;font-size:1.5rem;">Course Curriculum</h2>
+<div class="day-grid">
+<a href="days/day1.html" class="day-card">
+<span class="day-num">Day 01</span>
+<h3>How The Internet Works</h3>
+<p>Understand the client-server model, HTTP protocol, DNS, and the request-response cycle.</p>
+<div class="topics">
+<span class="topic">Client-Server</span>
+<span class="topic">HTTP</span>
+<span class="topic">DNS</span>
+<span class="topic">Ports</span>
+</div>
+</a>
+<a href="days/day2.html" class="day-card">
+<span class="day-num">Day 02</span>
+<h3>Your First Node.js Server</h3>
+<p>Install Node.js, understand modules, and build your first server from scratch.</p>
+<div class="topics">
+<span class="topic">Node.js</span>
+<span class="topic">Modules</span>
+<span class="topic">HTTP Server</span>
+<span class="topic">Routes</span>
+</div>
+</a>
+<a href="days/day3.html" class="day-card">
+<span class="day-num">Day 03</span>
+<h3>HTTP Methods and JSON</h3>
+<p>Master GET, POST, PUT, DELETE methods and learn data exchange with JSON.</p>
+<div class="topics">
+<span class="topic">HTTP Methods</span>
+<span class="topic">JSON</span>
+<span class="topic">REST</span>
+<span class="topic">APIs</span>
+</div>
+</a>
+<a href="days/day4.html" class="day-card">
+<span class="day-num">Day 04</span>
+<h3>Express.js Framework</h3>
+<p>Simplify server development with Express routing, middleware, and response methods.</p>
+<div class="topics">
+<span class="topic">Express</span>
+<span class="topic">Routing</span>
+<span class="topic">Middleware</span>
+<span class="topic">req/res</span>
+</div>
+</a>
+<a href="days/day5.html" class="day-card">
+<span class="day-num">Day 05</span>
+<h3>Building REST APIs</h3>
+<p>Structure a real project with routes, controllers, and build a complete CRUD API.</p>
+<div class="topics">
+<span class="topic">Project Structure</span>
+<span class="topic">CRUD</span>
+<span class="topic">Router</span>
+<span class="topic">Validation</span>
+</div>
+</a>
+<a href="days/day6.html" class="day-card">
+<span class="day-num">Day 06</span>
+<h3>MongoDB Fundamentals</h3>
+<p>Introduction to NoSQL databases, MongoDB setup, and basic CRUD operations.</p>
+<div class="topics">
+<span class="topic">NoSQL</span>
+<span class="topic">MongoDB</span>
+<span class="topic">Documents</span>
+<span class="topic">Collections</span>
+</div>
+</a>
+<a href="days/day7.html" class="day-card">
+<span class="day-num">Day 07</span>
+<h3>Mongoose ODM</h3>
+<p>Connect MongoDB to Express using Mongoose schemas, models, and queries.</p>
+<div class="topics">
+<span class="topic">Mongoose</span>
+<span class="topic">Schemas</span>
+<span class="topic">Models</span>
+<span class="topic">Queries</span>
+</div>
+</a>
+<a href="days/day8.html" class="day-card">
+<span class="day-num">Day 08</span>
+<h3>Data Modeling</h3>
+<p>Design database schemas, handle relationships, and implement data validation.</p>
+<div class="topics">
+<span class="topic">Schema Design</span>
+<span class="topic">References</span>
+<span class="topic">Population</span>
+<span class="topic">Validation</span>
+</div>
+</a>
+<a href="days/day9.html" class="day-card">
+<span class="day-num">Day 09</span>
+<h3>Authentication Basics</h3>
+<p>Implement user registration, password hashing with bcrypt, and login systems.</p>
+<div class="topics">
+<span class="topic">Bcrypt</span>
+<span class="topic">Registration</span>
+<span class="topic">Login</span>
+<span class="topic">Sessions</span>
+</div>
+</a>
+<a href="days/day10.html" class="day-card">
+<span class="day-num">Day 10</span>
+<h3>JWT Implementation</h3>
+<p>Generate and verify JWT tokens, protect routes, and implement refresh tokens.</p>
+<div class="topics">
+<span class="topic">JWT</span>
+<span class="topic">Tokens</span>
+<span class="topic">Protected Routes</span>
+<span class="topic">Auth Middleware</span>
+</div>
+</a>
+</div>
+<div class="concept-box" style="text-align:center;">
+<h4>Ready to Begin?</h4>
+<p style="margin-bottom:1.5rem;">Start your backend development journey with Day 1 - Understanding how the internet works.</p>
+<a href="days/day1.html" class="day-card" style="display:inline-flex;padding:1.25rem 2.5rem;margin:0;font-size:1.1rem;font-weight:600;">
+<span>Start Learning</span>
+<svg viewBox="0 0 56 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:72px;height:28px;margin-left:0.75rem;"><line x1="0" y1="12" x2="50" y2="12"></line><polyline points="44 5 52 12 44 19"></polyline></svg>
+</a>
+</div>
+</main>
+<footer>
+<p>Backend Development Mastery</p>
+<p>Built for aspiring developers who want to truly understand backend development.</p>
+<p class="made-by">Made by <span class="author-name">Shreyansh Dangar</span></p>
+<style>
+.made-by {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+.author-name {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--accent), #ff6b6b, #feca57, #48dbfb, #ff9ff3, var(--accent));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-flow 3s ease infinite;
+  font-weight: 700;
+}
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+</style>
+</footer>
+<script src="JS/script.js"></script>
+</body>
+</html>
