@@ -243,7 +243,7 @@ Watch. Learn. Master the concepts.
 ║   │                                                          │   ║
 ║   │  $ open index.html                                       │   ║
 ║   │                                                          │   ║
-║   │  Ready to learn!                                         │   ║
+║   │  ✓ Ready to learn!                                       │   ║
 ║   │                                                          │   ║
 ║   └──────────────────────────────────────────────────────────┘   ║
 ║                                                                  ║
@@ -276,7 +276,7 @@ Watch. Learn. Master the concepts.
 
 <br>
 
-<a href="https://github.com/yourusername">
+<a href="https://github.com/ShreyanshDangar">
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
 </a>
 
