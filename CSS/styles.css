@@ -47,6 +47,9 @@
     --blur-lg: blur(24px);
     --font-main: "Inter", sans-serif;
     --font-code: "JetBrains Mono", monospace;
+    --logo-glass-bg: rgba(74, 158, 255, 0.15);
+    --logo-glass-bg-hover: rgba(74, 158, 255, 0.22);
+    --logo-border-color: rgba(74, 158, 255, 0.3);
 }
 [data-theme="midnight"] {
     --bg-primary: #050508;
@@ -71,6 +74,9 @@
     --accent: #4a9eff;
     --text-primary: #e8eaed;
     --text-secondary: #9aa0a8;
+    --logo-glass-bg: rgba(74, 158, 255, 0.15);
+    --logo-glass-bg-hover: rgba(74, 158, 255, 0.22);
+    --logo-border-color: rgba(74, 158, 255, 0.3);
 }
 [data-theme="forest"] {
     --bg-primary: #020a06;
@@ -95,6 +101,9 @@
     --accent: #34d399;
     --text-primary: #e8eaed;
     --text-secondary: #9aa0a8;
+    --logo-glass-bg: rgba(52, 211, 153, 0.15);
+    --logo-glass-bg-hover: rgba(52, 211, 153, 0.22);
+    --logo-border-color: rgba(52, 211, 153, 0.3);
 }
 [data-theme="sunset"] {
     --bg-primary: #0a0505;
@@ -119,6 +128,9 @@
     --accent: #f97316;
     --text-primary: #e8eaed;
     --text-secondary: #9aa0a8;
+    --logo-glass-bg: rgba(249, 115, 22, 0.15);
+    --logo-glass-bg-hover: rgba(249, 115, 22, 0.22);
+    --logo-border-color: rgba(249, 115, 22, 0.3);
 }
 [data-theme="purple"] {
     --bg-primary: #08050a;
@@ -143,6 +155,9 @@
     --accent: #a78bfa;
     --text-primary: #e8eaed;
     --text-secondary: #9aa0a8;
+    --logo-glass-bg: rgba(167, 139, 250, 0.15);
+    --logo-glass-bg-hover: rgba(167, 139, 250, 0.22);
+    --logo-border-color: rgba(167, 139, 250, 0.3);
 }
 [data-theme="ocean"] {
     --bg-primary: #030810;
@@ -167,6 +182,9 @@
     --accent: #06b6d4;
     --text-primary: #e8eaed;
     --text-secondary: #9aa0a8;
+    --logo-glass-bg: rgba(6, 182, 212, 0.15);
+    --logo-glass-bg-hover: rgba(6, 182, 212, 0.22);
+    --logo-border-color: rgba(6, 182, 212, 0.3);
 }
 [data-theme="crimson"] {
     --bg-primary: #0a0304;
@@ -191,6 +209,9 @@
     --accent: #ef4444;
     --text-primary: #e8eaed;
     --text-secondary: #9aa0a8;
+    --logo-glass-bg: rgba(239, 68, 68, 0.15);
+    --logo-glass-bg-hover: rgba(239, 68, 68, 0.22);
+    --logo-border-color: rgba(239, 68, 68, 0.3);
 }
 [data-theme="cloud"] {
     --bg-primary: #f0f4f8;
@@ -220,6 +241,9 @@
     --success-soft: rgba(34, 197, 94, 0.12);
     --error-soft: rgba(239, 68, 68, 0.12);
     --warning-soft: rgba(234, 179, 8, 0.12);
+    --logo-glass-bg: rgba(59, 130, 246, 0.12);
+    --logo-glass-bg-hover: rgba(59, 130, 246, 0.18);
+    --logo-border-color: rgba(59, 130, 246, 0.25);
 }
 [data-theme="sand"] {
     --bg-primary: #faf7f2;
@@ -249,6 +273,9 @@
     --success-soft: rgba(34, 197, 94, 0.12);
     --error-soft: rgba(239, 68, 68, 0.12);
     --warning-soft: rgba(234, 179, 8, 0.12);
+    --logo-glass-bg: rgba(217, 119, 6, 0.12);
+    --logo-glass-bg-hover: rgba(217, 119, 6, 0.18);
+    --logo-border-color: rgba(217, 119, 6, 0.25);
 }
 [data-font="inter"] {
     --font-main: "Inter", sans-serif;
@@ -340,6 +367,35 @@ body::after {
     background-clip: text;
     letter-spacing: -0.02em;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.brand-logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 8px;
+    background: var(--logo-glass-bg);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--logo-border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.brand-logo-wrapper:hover {
+    background: var(--logo-glass-bg-hover);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+.brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
 }
 .home-btn {
     width: 36px;
@@ -1937,6 +1993,10 @@ footer p:last-child {
     transform: scale(0.95);
 }
 @media (max-width: 1024px) {
+    .brand-logo-wrapper {
+        display: none;
+    }
+
     .nav-center {
         max-width: calc(100% - 240px);
     }
@@ -2003,6 +2063,9 @@ footer p:last-child {
     }
     .hamburger {
         display: flex;
+    }
+    .brand-logo-wrapper {
+        display: none;
     }
     .container {
         padding-top: calc(72px + 1.5rem);
