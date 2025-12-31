@@ -29,11 +29,11 @@
 ## The Revolution in Learning
 
 ```
-    99% of sites forces their design on you
+    ⭕  99% of sites forces their design on you
     
-    Here it's built something different
+    ⭕  Here it's built something different
     
-    Your learning. Your way. Your style.
+⭕  Your learning. Your way. Your style.
 ```
 
 <br>
